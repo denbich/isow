@@ -1,0 +1,8 @@
+/agreements/
+/files/
+/forms/
+/prizes/
+/profiles/
+/sponsors/
+/storage/
+!.gitignore
