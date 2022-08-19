@@ -487,11 +487,13 @@ bg-gray-200
         </div>
         <div class="modal-body">
           <ol>
-              <li></li>
+              <li>{{ __('Kliknij poniższy przycisk') }}</li>
+              <li>{{ __('Wybierz zdjęcie z galerii (z widoczną twarzą - zdjęcie będzie wykorzystywane w identyfikatorach)') }}</li>
+              <li>{{ __('Przytnij zdjęcie tak, by zdjęcie przedstawiało ciebie :)') }}</li>
           </ol>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Zamknij</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
         </div>
       </div>
     </div>
@@ -508,11 +510,14 @@ bg-gray-200
         </div>
         <div class="modal-body">
           <ol>
-              <li></li>
+              <li>{{ __('Wybierz odpowiednią zgodę (czy jesteś pełnoletni czy niepełnoletni)') }}</li>
+              <li>{{ __('Ty lub opiekun prawny wypełnia zgodę') }}</li>
+              <li>{{ __('Robisz skan lub zdjęcie/a zgody') }}</li>
+              <li>{{ __('Wrzucasz plik (plik PDF lub zdjęcie/a JPG lub PNG)') }}</li>
           </ol>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Zamknij</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
         </div>
       </div>
     </div>
