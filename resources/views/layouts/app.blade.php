@@ -16,14 +16,13 @@
   <link href="{{ url('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{ url('/assets/vendor/@fortawesome/css/all.min.css') }}" type="text/css">
-  <script src="https://cdn.tiny.cloud/1/{{ env('TINYMCE') }}/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+  <script src="https://cdn.tiny.cloud/1/{{ config('isow.tinymce') }}/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
   <!-- CSS Files -->
   <link id="pagestyle" href="{{ url('/assets/css/argon-dashboard.css?v=1.2') }}" rel="stylesheet" />
   <link rel="stylesheet" href="{{ url('/assets/css/cookie.css') }}" type="text/css">
   <link rel="stylesheet" href="{{ url('/assets/css/crop.css') }}">
 
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
 
   <link rel="stylesheet" href="https://unpkg.com/dropzone/dist/dropzone.css" />
   <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet"/>
@@ -35,7 +34,7 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', '{{ env('GOOGLE_ANALYTICS_KEY') }}');
+    gtag('config', '{{ config("isow.google.analitycs") }}');
   </script>
 
   @yield('style')
@@ -81,7 +80,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/Wruczek/Bootstrap-Cookie-Alert@gh-pages/cookiealert.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initMap&channel=GMPSB_addressselection_v1_cABC" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('isow.google.maps') }}&libraries=places&callback=initMap&channel=GMPSB_addressselection_v1_cABC" async defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <script src="https://demos.creative-tim.com/argon-dashboard-pro/assets/js/plugins/choices.min.js"></script>
