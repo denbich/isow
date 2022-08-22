@@ -194,8 +194,8 @@ class CFormsController extends Controller
                 'description_position'.$i => 'required|string|max:255',
                 'points_position'.$i => 'required|numeric|min:1',
                 'max_position'.$i => 'required|numeric|min:1',
-                'start_position'.$i => 'required|date_format:H:i:s',
-                'end_position'.$i => 'required|date_format:H:i:s',
+                'start_position'.$i => 'required|date_format:H:i',
+                'end_position'.$i => 'required|date_format:H:i',
             ];
 
             $vali_positions = array_merge($vali_positions, $vali);
