@@ -35,7 +35,6 @@ class CFormsController extends Controller
             return $query->where('end', '>', date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s').' - 7 days')));
         })->with(['form_translate', 'calendar', 'form_category'])->withCount('signed_form')->get();
 
-        dd($forms);
         return view('coordinator.forms.index', ['forms' => $forms]);
     }
 
