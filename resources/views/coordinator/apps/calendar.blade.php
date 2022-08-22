@@ -81,8 +81,8 @@
                                 @forelse ($future_events as $event)
                                     <div class="d-flex my-2">
                                         <div>
-                                            <div class="icon icon-shape bg-primary-soft shadow text-center border-radius-md shadow-none">
-                                                <i class="{{ $event->icon }} text-lg text-primary text-gradient opacity-10" aria-hidden="true"></i>
+                                            <div class="icon-shape bg-{{ $event->form->form_category->color }}-soft shadow text-center border-radius-md shadow-none">
+                                                <i class="fa-solid fa-{{ $event->form->form_category->icon }} fa-xl text-{{ $event->form->form_category->color }} opacity-10" aria-hidden="true"></i>
                                             </div>
                                         </div>
                                         <div class="ms-3">
@@ -157,7 +157,7 @@
                         start : '{{ $event->start }}',
                         end: '{{ $event->end }}',
                         url: '{{ route("v.form.show", [$event->form->ivid]) }}',
-                    }
+                    },
                     @endforeach
                 ],
                 eventClick: function(info) {

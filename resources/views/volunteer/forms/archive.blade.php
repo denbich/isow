@@ -54,21 +54,23 @@
          </div>
         <div class="row">
             @forelse ($forms as $form)
-            <div class="card col-lg-3 col-md-6">
-                <a href="{{ route('v.form.show', [$form->ivid]) }}">
-                    <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
-                    <div class="d-block">
-                        <img src="{{ url($form->icon_src) }}" class="img-fluid border-radius-lg w-100">
-                    </div>
-                    </div>
+            <div class="col-lg-3 col-md-6 my-1">
+                <div class="card">
+                    <a href="{{ route('v.form.show', [$form->ivid]) }}">
+                        <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
+                        <div class="d-block">
+                            <img src="{{ url($form->icon_src) }}" class="img-fluid border-radius-lg w-100">
+                        </div>
+                        </div>
 
-                    <div class="card-body pt-2">
-                    <span class="text-gradient text-primary text-uppercase text-xs font-weight-bold my-2">{{ $form->form_category->form_category_translate->name }}</span>
-                    <h5 class="card-title d-block text-darker">{{ $form->form_translate->title }}</h5>
-                    <p class="mb-2"><span class="text-dark">{{ __('volunteer.form.list.date') }}</span><br> <span>{{ date('d.m.Y', strtotime($form->expiration)) }} r. o godz. {{ date('H:i', strtotime($form->expiration)) }}</span></p>
-                    <p><i class="fa-solid fa-users text-primary"></i> <span class="badge badge-primary">{{ $form->signed_form_count }}</span></p>
-                    </div>
-                </a>
+                        <div class="card-body pt-2">
+                        <span class="text-gradient text-primary text-uppercase text-xs font-weight-bold my-2">{{ $form->form_category->form_category_translate->name }}</span>
+                        <h5 class="card-title d-block text-darker">{{ $form->form_translate->title }}</h5>
+                        <p class="mb-2"><span class="text-dark">{{ __('volunteer.form.list.date') }}</span><br> <span>{{ date('d.m.Y', strtotime($form->expiration)) }} r. o godz. {{ date('H:i', strtotime($form->expiration)) }}</span></p>
+                        <p><i class="fa-solid fa-users text-primary"></i> <span class="badge badge-primary">{{ $form->signed_form_count }}</span></p>
+                        </div>
+                    </a>
+                </div>
               </div>
             @empty
 

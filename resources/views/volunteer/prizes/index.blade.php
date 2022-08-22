@@ -69,27 +69,30 @@
          </div>
         <div class="row">
             @forelse ($prizes as $prize)
-            <div class="card col-lg-3 col-md-6">
-                <a href="{{ route('v.prize', [$prize->ivid]) }}">
-                    <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
-                    <div class="d-block">
-                        <img src="{{ url($prize->icon_src) }}" class="img-fluid border-radius-lg w-100">
-                    </div>
-                    </div>
-
-                    <div class="card-body pt-2">
-                        <span class="text-gradient text-primary text-uppercase text-xs font-weight-bold my-2">{{ $prize->category->prize_category_translate->name }}</span>
-                        <h5 class="card-title d-block text-darker">{{ $prize->prize_translate->title }}</h5>
-                        <p class="mb-2"><span class="text-dark">Ilość dostępnych sztuk:
-                            @if ($prize->with_combinations == 0)
-                                {{ $prize->quantity }}
-                            @else
-                                {{ $prize->combinations->sum('quantity') }}
-                            @endif
-                        </span></p>
-                        <p><i class="fa-solid fa-star text-primary"></i> <span class="badge badge-primary">{{ $prize->points }}</span></p>
+            <div class="col-lg-3 col-md-6 my-1">
+                <div class="card">
+                    <a href="{{ route('v.prize', [$prize->ivid]) }}">
+                        <div class="card-header p-0 mx-3 mt-3 position-relative z-index-1">
+                        <div class="d-block">
+                            <img src="{{ url($prize->icon_src) }}" class="img-fluid border-radius-lg w-100">
                         </div>
-                </a>
+                        </div>
+
+                        <div class="card-body pt-2">
+                            <span class="text-gradient text-primary text-uppercase text-xs font-weight-bold my-2">{{ $prize->category->prize_category_translate->name }}</span>
+                            <h5 class="card-title d-block text-darker">{{ $prize->prize_translate->title }}</h5>
+                            <p class="mb-2"><span class="text-dark">Ilość dostępnych sztuk:
+                                @if ($prize->with_combinations == 0)
+                                    {{ $prize->quantity }}
+                                @else
+                                    {{ $prize->combinations->sum('quantity') }}
+                                @endif
+                            </span></p>
+                            <p><i class="fa-solid fa-star text-primary"></i> <span class="badge badge-primary">{{ $prize->points }}</span></p>
+                            </div>
+                    </a>
+                </div>
+
               </div>
             @empty
 

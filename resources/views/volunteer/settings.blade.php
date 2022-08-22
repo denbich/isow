@@ -138,7 +138,7 @@
                     <h5>{{ __('Postawowe informacje') }}</h5>
                  </div>
                  <div class="card-body pt-0">
-                     <form action="{{ route('v.settings.profile') }}" method="POST" role="form" id="updateprofile-form">
+                     <form action="{{ route('v.settings.profile') }}" method="POST" role="form" id="updateprofile_form">
                         <input id="hidden" type="hidden" name="phone">
                          @csrf
                     <div class="row">
@@ -244,12 +244,12 @@
                         <label class="form-label mt-4" for="tshirt_size">{{ __('index.register.tshirt') }}</label>
                         <div class="input-group">
                           <select class="form-control @error('tshirt_size') is-invalid @enderror w-100" id="tshirt_size" name="tshirt_size" required>
-                              <option value="XS" @selected($volunteer->tshirt_size == "XS")>XS</option>
-                              <option value="S" @selected($volunteer->tshirt_size == "S")>S</option>
-                              <option value="M" @selected($volunteer->tshirt_size == "M")>M</option>
-                              <option value="L" @selected($volunteer->tshirt_size == "L")>L</option>
-                              <option value="XL" @selected($volunteer->tshirt_size == "XL")>XL</option>
-                              <option value="XXL" @selected($volunteer->tshirt_size == "XXL")>XXL</option>
+                              <option value="XS" @selected($volunteer->tshirt_size == "XS" || $volunteer->tshirt_size == "xs")>XS</option>
+                              <option value="S" @selected($volunteer->tshirt_size == "S" || $volunteer->tshirt_size == "s")>S</option>
+                              <option value="M" @selected($volunteer->tshirt_size == "M" || $volunteer->tshirt_size == "m")>M</option>
+                              <option value="L" @selected($volunteer->tshirt_size == "L" || $volunteer->tshirt_size == "l")>L</option>
+                              <option value="XL" @selected($volunteer->tshirt_size == "XL" || $volunteer->tshirt_size == "xl")>XL</option>
+                              <option value="XXL" @selected($volunteer->tshirt_size == "XXL" || $volunteer->tshirt_size == "xxl")>XXL</option>
                           </select>
                           @error('tshirt_size')
                               <span class="text-danger text-sm" role="alert">
@@ -263,8 +263,7 @@
                        <div class="col-lg-6">
                           <label class="form-label mt-4" for="pesel">{{ __('index.register.pesel') }}</label>
                           <div class="input-group">
-                             <input id="pesel" name="pesel" class="form-control @error('pesel') isinvalid @enderror" type="number"
-                             value="{{ decrypt($volunteer->pesel) }}">
+                             <input id="pesel" name="pesel" class="form-control @error('pesel') isinvalid @enderror" type="text" value="{{ decrypt($volunteer->pesel) }}" required minlength="11" maxlength="11">
                           </div>
                           @error('pesel')
                             <span class="text-danger text-sm" role="alert">
@@ -313,7 +312,7 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
-                        <button class="btn bg-gradient-dark btn-sm float-end mt-3 mb-0" type="submit">Zaaktualizuj profil</button>
+                        <button class="btn bg-gradient-dark btn-sm float-end mt-3 mb-0" id="updateprofile_button" type="submit">{{ __('Zaaktualizuj profil') }}</button>
                 </form>
                  </div>
               </div>
@@ -923,7 +922,7 @@
        "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
     });
 
-    $("#updateprofile-form").submit(function() {
+    $("#updateprofile_form").submit(function() {
         $("#telephone").val($("#telephone").val().replace(/[^+\d]+/g, ""));
         $("#hidden").val(iti.getNumber().replace(/[^+\d]+/g, ""));
     });
@@ -931,6 +930,11 @@
 </script>
 
 <script>
+    $('#updateprofile_form').submit(function(){
+        $('#updateprofile_button').prop('disabled', true);
+        $('#updateprofile_button').prepend('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ');
+    });
+
     $('#google_disconnect_form').submit(function(){
         $('#google_disconnect_button').prop('disabled', true);
         $('#google_disconnect_button').prepend('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ');

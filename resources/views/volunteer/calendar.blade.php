@@ -79,15 +79,7 @@
                                     <div class="d-flex my-2">
                                         <div>
                                             <div class="icon-shape bg-{{ $event->form->form_category->color }}-soft shadow text-center border-radius-md shadow-none">
-                                                <i class="fa-solid @switch($event->form->form_category->icon)
-                                                    @case('run') fa-person-running @break
-                                                    @case('swim') fa-person-swimming @break
-                                                    @case('bike') fa-person-biking @break
-                                                    @case('ski') fa-person-skiing @break
-                                                    @case('basketball') fa-basketball @break
-                                                    @case('volleyball') fa-volleyball @break
-                                                    @case('other') fa-people-group @break
-                                                @endswitch fa-xl text-{{ $event->form->form_category->color }} opacity-10" aria-hidden="true"></i>
+                                                <i class="fa-solid fa-{{ $event->form->form_category->icon }} fa-xl text-{{ $event->form->form_category->color }} opacity-10" aria-hidden="true"></i>
                                             </div>
                                         </div>
                                         <div class="ms-3">
@@ -155,15 +147,15 @@
                     week:     '{{ __("main.week") }}',
                     day:      '{{ __("main.day") }}'
                 },
-              events: [
+                events: [
                     @foreach($events as $event)
                     {
-                        title : '{{ $event->title }}',
+                        title : "{{ $event->title }}",
                         description : '{{ $event->title }}',
                         start : '{{ $event->start }}',
                         end: '{{ $event->end }}',
                         url: '{{ route("v.form.show", [$event->form->ivid]) }}',
-                    }
+                    },
                     @endforeach
                 ],
                 eventClick: function(info) {

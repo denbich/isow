@@ -122,7 +122,6 @@
                                         {{ $message }}
                                     </div>
                                 @enderror
-                                <p id="counter_pl_title_pol" class="text-sm">0 / 255 znaków</p>
                             </div>
                             <div class="form-group">
                                 <label for="pl_description_pol">Opis</label>
@@ -174,8 +173,8 @@
                             <div class="justify-content-center">
                                 <div class="form-group">
                                     <select class="form-control" id="category-dropdown" name="category">
-                                        @forelse ($categories as $cat)
-                                        <option value="{{ $cat->ivid }}" @checked($form->category == $cat->id)>{{ $cat->form_category_translate->name }}</option>
+                                        @forelse ($categories as $category)
+                                        <option value="{{ $category->ivid }}" @selected($form->category_id == $category->id)>{{ $category->form_category_translate->name }}</option>
                                         @empty
                                         <option disabled selected>Brak kategorii</option>
                                         @endforelse

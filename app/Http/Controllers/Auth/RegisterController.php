@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use App\Models\User_session;
 use App\Models\User_setting;
 use App\Http\Controllers\Controller;
+use App\Models\Volunteer_language;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Providers\RouteServiceProvider;
@@ -105,7 +106,6 @@ class RegisterController extends Controller
                 $pdf->addPDF(storage_path('app/temp/'.$filename), 'all');
             } else if($value->getmimetype() == 'application/pdf') $pdf->addPDF($value, 'all');
         }
-        //dd($data['agreement']);
         $image = $this->create_image($data['profile']);
         Storage::disk('profiles')->put($image['imageName'], $image['image']);
 
@@ -159,6 +159,8 @@ class RegisterController extends Controller
         ]);
 
         //$user_session = User_session::create([]);
+
+        Volunteer_language::create(['user_id' => $user->id]);
 
         $volunteer = Volunteer::create([
             'ivid' => Str::uuid(),

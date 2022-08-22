@@ -35,13 +35,14 @@ class VHomeController extends Controller
     public function profile()
     {
         $volunteer = Volunteer::where('user_id', Auth::id())->firstOrFail();
-        return view('volunteer.profile', ['volunteer' => $volunteer]);
+        $signs = Form_sign::where('volunteer_id', Auth::id())->with('form')->get();
+        return view('volunteer.profile', ['volunteer' => $volunteer, 'signs' => $signs]);
     }
 
     public function change_photo(Request $request)
     {
-        $request->validate(['profile' => 'required']);
-        $profile = $this->create_image($request->profile);
+        $validated = $request->validate(['profile' => 'required']);
+        $profile = $this->create_image($validated['profile']);
 
         Storage::disk('profiles')->delete(substr(Auth::user()->photo_src, 10));
         Storage::disk('profiles')->put($profile['imageName'], $profile['image']);
@@ -67,7 +68,7 @@ class VHomeController extends Controller
             $q = $_GET['q'];
             $forms = Form::with('form_translate')->whereHas('form_translate', function ($query) use ($q){ $query->where('title', 'like', '%'.$q.'%');})->get();
 
-            //$forms_post = Signed_form::where('volunteer_id', Auth::user()->id)->pluck('form_id')->toArray();
+            //$forms_post = Signed_form::where('volunteer_id', Auth::id())->pluck('form_id')->toArray();
             //array_push($forms_post, 0);
             //$posts = Post::WhereIn('form_id', $forms_post)->whereHas('post_translate', function ($query) use ($q){ $query->where('title', 'like', '%'.$q.'%');})->with(['post_translate', 'author'])->toSql(); //->orWhereIn('form_id', $forms_post)
 
@@ -84,7 +85,7 @@ class VHomeController extends Controller
     public function calendar()
     {
         $events = Calendar_event::with('form')->get();
-        $future_events = Calendar_event::where('start', '>=', date('d-m-Y H:i:s'))->with('form')->get();
+        $future_events = Calendar_event::where('start', '>=', date('Y-m-d H:i:s'))->with('form')->get();
         return view('volunteer.calendar', ['events' => $events, 'future_events' => $future_events]);
     }
 }

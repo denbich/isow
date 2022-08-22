@@ -103,7 +103,7 @@
                 </div>
 
                 <div class="card-body pt-2">
-                <span class="text-gradient text-primary text-uppercase text-xs font-weight-bold my-2">{{ $form->form_category->form_category_translate->title }}</span>
+                <span class="text-gradient text-primary text-uppercase text-xs font-weight-bold my-2">{{ $form->form_category->form_category_translate->name }}</span>
                 <h5 class="card-title d-block text-darker">{{ $form->form_translate->title }}</h5>
                 <p class="mb-2"><span class="text-dark">{{ __('volunteer.form.list.date') }}</span><br> <span>{{ date('d.m.Y', strtotime($form->expiration)) }} r. o godz. {{ date('H:i', strtotime($form->expiration)) }}</span></p>
                 <p><i class="fa-solid fa-users text-primary"></i> <span class="badge badge-primary">{{ 1 }}</span></p>

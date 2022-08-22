@@ -105,7 +105,7 @@ class CHomeController extends Controller
     public function change_photo(Request $request)
     {
         $validated = $request->validate(['profile' => 'required']);
-        $photo = $this->create_image($request->profile);
+        $photo = $this->create_image($validated['profile']);
 
         Storage::disk('profiles')->delete(substr(Auth::user()->photo_src, 10));
         Storage::disk('profiles')->put($photo['imageName'], $photo['image']);
@@ -151,31 +151,40 @@ class CHomeController extends Controller
 
     public function send_mail(Request $request)
     {
-        abort(500);
-        $validate = $request->validate([
+        $validated = $request->validate([
             'recivier' => 'required',
-            'receiver-select' => 'nullable|required_if:recivier,choose',
-            'email' => 'email|nullable|required_if:recivier,custom',
+            'receiver_select' => 'nullable|required_if:recivier,choose',
+            'email' => 'nullable|email|required_if:recivier,custom',
             'title' => 'required|max:255',
             'content' => 'required',
         ]);
 
         $datam = array(
-            'title' => $request->title,
-            'content' => str_replace('"', "'", str_replace("\r\n", '', $request->content)),
+            'title' => $validated['title'],
+            'content' => str_replace('"', "'", str_replace("\r\n", '', $validated['content'])),
         );
 
-        if($request->recivier_radio == 'choose')
+        switch($validated['receiver_select'])
         {
-            Mail::bcc(User::where([['role', 'volunteer'], ['ivid', $request->recivier_select]])->pluck('email'))->send(new CoordinatorMessage($datam));
-        } else {
-            Mail::bcc(User::where('role', 'volunteer')->pluck('email'))->send(new CoordinatorMessage($datam));
+            case("all"):
+                Mail::bcc(User::where('role', 'volunteer')->whereHas('settings', function($query){
+                    $query->where('notifications_email', 1);
+                })->pluck('email'))->send(new CoordinatorMessage($datam));
+            break;
+            case("choose"):
+                Mail::bcc(User::where([['role', 'volunteer']])->whereHas('settings', function($query){
+                    $query->where('notifications_email', 1);
+                })->whereIn('ivid', $validated['recivier_select'])->pluck('email'))->send(new CoordinatorMessage($datam));
+            break;
+            case("custom"):
+                Mail::to($validated['email'])->send(new CoordinatorMessage($datam));
+            break;
         }
 
         Sent_mail::create([
-            'sender_id' => Auth::user()->id,
-            'title' => $request->title,
-            'content' => str_replace('"', "'", str_replace("\r\n", '', $request->content))
+            'sender_id' => Auth::id(),
+            'title' => $validated['title'],
+            'content' => str_replace('"', "'", str_replace("\r\n", '', $validated['content']))
         ]);
 
         return back()->with('sent_mail', true);

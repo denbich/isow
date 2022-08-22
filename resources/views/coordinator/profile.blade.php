@@ -72,10 +72,19 @@
                      <p class="mb-0 font-weight-bold text-sm">{{ Auth::user()->name }}</p>
                   </div>
                </div>
-               <div class="ms-auto col-auto text-right me-4 d-none">
-                    <h5 class="mb-1 text-right">{{ __('Liczba punktów') }}</h5>
-                    <span class="ms-auto badge badge-primary badge-lg"><i class="fa-solid fa-star"></i> {{ 3 }}</span>
-               </div>
+               <div class="col-auto my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+                <form action="{{ route('c.change.profile') }}" method="post" id="changeprofilephotoform">
+                    @csrf
+                    <label for="upload_image1" class="w-100">
+                        <a class="btn btn-primary btn-icon w-100 text-white m-0">
+                            <span class="btn-inner--icon me-1"><i class="far fa-images"></i></span>
+                            <span class="btn-inner--text">{{ __('Zmień zdjęcie profilowe') }}</span>
+                        </a>
+                        <input type="file" name="logo" class="image d-none" id="upload_image1" accept="image/*">
+                        <input type="hidden" name="profile" id="profile_photo" value="">
+                    </label>
+                </form>
+           </div>
             </div>
          </div>
         </div>
@@ -141,5 +150,97 @@
       @include('coordinator.include.footer')
     </div>
   </main>
+  <div class="modal fade" id="cropmodal1" tabindex="-1" role="dialog" aria-labelledby="cropmodalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Wytnij zdjęcie</h5>
+              </div>
+              <div class="modal-body">
+                   <div class="img-container">
+                       <div class="row">
+                           <div class="col-md-8">
+                               <img src="" id="sample_image1" class="img-crop"/>
+                          </div>
+                          <div class="col-md-4">
+                              <div class="preview"></div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" id="crop1" class="btn btn-primary">Wytnij</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('main.cancel') }}</button>
+              </div>
+          </div>
+      </div>
+  </div>
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function(){
+	var $modal1 = $('#cropmodal1');
+	var image1 = document.getElementById('sample_image1');
+	var cropper1;
+	$('#upload_image1').change(function(event){
+		var files1 = event.target.files;
+		var done1 = function(url){
+			image1.src = url;
+			$modal1.modal('show');
+		};
+		if(files1 && files1.length > 0)
+		{
+			reader1 = new FileReader();
+			reader1.onload = function(event)
+			{
+				done1(reader1.result);
+			};
+			reader1.readAsDataURL(files1[0]);
+		}
+	});
+	$modal1.on('shown.bs.modal', function() {
+		cropper1 = new Cropper(image1, {
+			aspectRatio: 1,
+			viewMode: 3,
+			preview:'.preview'
+		});
+	}).on('hidden.bs.modal', function(){
+		cropper1.destroy();
+   		cropper1 = null;
+	});
+	$('#crop1').click(function(){
+		canvas1 = cropper1.getCroppedCanvas({
+			width:500,
+			height:500
+		});
+		canvas1.toBlob(function(blob){
+			url1 = URL.createObjectURL(blob);
+			var reader1 = new FileReader();
+			reader1.readAsDataURL(blob);
+			reader1.onloadend = function(){
+				var base64data1 = reader1.result;
+				const time = setInterval(() => {
+                    document.getElementById("profile_photo").value = base64data1;
+                }, 1);
+				document.getElementById("profile_photo").value = base64data1;
+				$modal1.modal('hide');
+                $( "#changeprofilephotoform" ).submit();
+			};
+		});
+	});
+});
+</script>
+
+@if (session('change_profile'))
+    <script>
+    Swal.fire({
+        icon: 'success',
+        title: 'zdjęcie profilowe zostało zmienione pomyślnie!',
+        showConfirmButton: false,
+        timer: 3000
+    })
+    </script>
+    @endif
+@endpush
 

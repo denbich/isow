@@ -183,15 +183,7 @@
                             <div class="row align-items-center">
                                 <div class="col-auto">
                                     <a href="{{ route('v.form.show', [$form->ivid]) }}" class="avatar rounded-circle">
-                                        <i class="fa-solid @switch($form->form_category->icon)
-                                            @case('run') fa-person-running @break
-                                            @case('swim') fa-person-swimming @break
-                                            @case('bike') fa-person-biking @break
-                                            @case('ski') fa-person-skiing @break
-                                            @case('basketball') fa-basketball @break
-                                            @case('volleyball') fa-volleyball @break
-                                            @case('other') fa-people-group @break
-                                        @endswitch fa-2x text-{{ $form->form_category->color }}"></i>
+                                        <i class="fa-solid fa-{{ $form->form_category->icon }} fa-2x text-{{ $form->form_category->color }}"></i>
                                     </a>
                                 </div>
                                 <div class="col">
@@ -324,7 +316,7 @@
               </div>
               <div class="card-body pt-0">
                   <ul>
-                    <li>v. 2.0.0 alfa - Nowy wygląd, połączenie konta z Google i Facebook, zarządzanie powiadomieniami</li>
+                    <li>v. 1.0.0 - Nowy wygląd, połączenie konta z Google i Facebook, zarządzanie powiadomieniami</li>
                   </ul>
               </div>
             </div>

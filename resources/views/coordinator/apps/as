@@ -1,7 +1,0 @@
-<select name="receiver-select" id="receiver-select" class="form-control @error('title') is-invaid @enderror" multiple>
-                                @forelse ($volunteers as $volunteer)
-                                    <option value="{{ $volunteer->ivid }}">{{ $volunteer->firstname." ".$volunteer->lastname." (".$volunteer->name.")" }}</option>
-                                @empty
-                                    <option disabled selected>{{ __('Brak wolontariuszy!') }}</option>
-                                @endforelse
-                            </select>

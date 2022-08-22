@@ -34,6 +34,8 @@ class CFormsController extends Controller
         $forms = Form::whereHas('calendar', function ($query) {
             return $query->where('end', '>', date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s').' - 7 days')));
         })->with(['form_translate', 'calendar', 'form_category'])->withCount('signed_form')->get();
+
+        dd($forms);
         return view('coordinator.forms.index', ['forms' => $forms]);
     }
 
@@ -86,18 +88,18 @@ class CFormsController extends Controller
         ];
 
         $validator = array_merge($vali_options, $vali_positions);
-        $request->validate($validator);
+        $validated = $request->validate($validator);
 
-        $image = $this->create_image($request->icon);
+        $image = $this->create_image($validated['icon']);
         Storage::disk('forms')->put($image['imageName'], $image['image']);
 
-        $category = Form_category::where('ivid', $request->category)->firstOrFail();
+        $category = Form_category::where('ivid', $validated['category'])->firstOrFail();
 
         $form = Form::create([
             'ivid' => Str::uuid(),
-            'expiration' => $request->expiration,
-            'place_longitude' => $request->place_longitude_pol,
-            'place_latitude' => $request->place_latitude_pol,
+            'expiration' => $validated['expiration'],
+            'place_longitude' => $validated['place_longitude_pol'],
+            'place_latitude' => $validated['place_latitude_pol'],
             'icon_src' => '/forms/'.$image['imageName'],
             'author_id' => Auth::id(),
             'category_id' => $category->id,
@@ -107,11 +109,11 @@ class CFormsController extends Controller
         Form_translate::create([
             'form_id' => $form->id,
             'locale' => 'pl',
-            'title' => $request->pl_title,
-            'description' => str_replace('"', "'", str_replace("\r\n", '', $request->pl_description)),
+            'title' => $validated['pl_title'],
+            'description' => str_replace('"', "'", str_replace("\r\n", '', $validated['pl_description'])),
         ]);
 
-        for ($i = 1; $i <= $request->position_count; $i++)
+        for ($i = 1; $i <= $validated['position_count']; $i++)
         {
             $p_points = 'points_position'.$i;
             $p_max = 'max_position'.$i;
@@ -139,27 +141,27 @@ class CFormsController extends Controller
         Calendar_event::create([
             'ivid' => Str::uuid(),
             'form_id' => $form->id,
-            'start' => $request->start,
-            'end' => $request->stop,
-            'title' => $request->pl_title,
+            'start' => $validated['start'],
+            'end' => $validated['stop'],
+            'title' => $validated['pl_title'],
         ]);
 
-        // $datam = array(
-        //     'subject' => 'Nowy formularz - '.$request->pl_title,
-        //     'title' => $request->pl_title,
-        //     'expiration' => $request->expiration,
-        //     'button-text' => 'Zapisz się',
-        //     'button-link' => route('v.form.show', [$form->ivid])
-        // );
+        $datam = array(
+            'subject' => 'Nowy formularz - '.$validated['pl_title'],
+            'title' => $validated['pl_title'],
+            'expiration' => date('d.m.Y H:i', strtotime($validated['expiration'])),
+            'button-text' => 'Zapisz się',
+            'button-link' => route('v.form.show', [$form->ivid])
+        );
 
-        // $volunteers = User::where('role', 'volunteer')->whereHas('settings', function($query){
-        //     $query->where('notifications_email', 1);
-        // })->pluck('email');
+        $volunteers = User::where('role', 'volunteer')->whereHas('settings', function($query){
+            $query->where('notifications_email', 1);
+        })->pluck('email');
 
-        // if(count($volunteers) > 0)
-        // {
-        //     Mail::bcc($volunteers)->send(new NewForm($datam));
-        // }
+        if(count($volunteers) > 0)
+        {
+            Mail::bcc($volunteers)->send(new NewForm($datam));
+        }
 
         return redirect()->route('c.form.show', [$form->ivid])->with(['created_form' => true]);
     }
@@ -170,7 +172,6 @@ class CFormsController extends Controller
         $positions = Form_position::where('form_id', $form->id)->with('form_position_translate')->withCount('signed_form')->get();
         $signs = Form_sign::where('form_id', $form->id)->with(['volunteer', 'position'])->get();
         $volunteers = User::where('role', 'volunteer')->where('id', '!=', $signs->pluck('volunteer.id')->toArray())->with('volunteer')->get();
-        //dd(isset($signs->pluck('condition')->countBy()->toArray()[0]));
 
         return view('coordinator.forms.show', ['form' => $form, 'positions' => $positions, 'signs' => $signs, 'volunteers' => $volunteers]);
     }
@@ -210,42 +211,42 @@ class CFormsController extends Controller
             'place_longitude' => 'required',
             'place_latitude' => 'required',
             'icon' => 'nullable',
-            'category' => 'required',
+            'category' => 'required|uuid',
         ];
 
         $validator = array_merge($vali_options, $vali_positions);
-        $request->validate($validator);
+        $validated = $request->validate($validator);
 
         $form = Form::where('ivid', $id)->firstOrFail();
-        $category = Form_category::where('ivid', $request->category)->firstOrFail();
-        if($request->icon != null)
+        $category = Form_category::where('ivid', $validated['category'])->firstOrFail();
+        if($validated['icon'] != null)
         {
-            $image = $this->create_image($request->icon);
-
+            $image = $this->create_image($validated['icon']);
             Storage::disk('forms')->delete($form->icon_src);
             Storage::disk('forms')->put($image['imageName'], $image['image']);
 
             $form->update([
                 'icon_src' => '/forms/'.$image['imageName'],
-                'category' => $category->id,
-                'place_longitude' => $request->place_longitude,
-                'place_latitude' => $request->place_latitude,
+                'category_id' => $category->id,
+                'place_longitude' => $validated['place_longitude'],
+                'place_latitude' => $validated['place_latitude'],
             ]);
         } else {
             $form->update([
-                'place_longitude' => $request->place_longitude,
-                'place_latitude' => $request->place_latitude,
+                'category_id' => $category->id,
+                'place_longitude' => $validated['place_longitude'],
+                'place_latitude' => $validated['place_latitude'],
             ]);
         }
 
         Form_translate::where('form_id', $form->id)->firstOrFail()->update([
-            'title' => $request->pl_title,
-            'description' => str_replace('"', "'", str_replace("\r\n", '', $request->pl_description)),
+            'title' => $validated['pl_title'],
+            'description' => str_replace('"', "'", str_replace("\r\n", '', $validated['pl_description'])),
         ]);
 
         Calendar_event::where('form_id', $form->id)->firstOrFail()->update([
-            'start' => $request->start,
-            'stop' => $request->stop,
+            'start' => $validated['start'],
+            'stop' => $validated['stop'],
         ]);
 
         for ($i = 1; $i <= $request->positions_number; $i++)
@@ -520,6 +521,7 @@ class CFormsController extends Controller
                 foreach($volunteers as $volunteer)
                 {
                     $pdf::AddPage("P");
+                    $pdf::SetAutoPageBreak(0, 0);
                     if($request->logocustom == "on")
                     {
                         $pdf::Image(url('/img/id/1b.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
@@ -533,7 +535,9 @@ class CFormsController extends Controller
                     $pdf::write2DBarcode(route('volunteer.id', $volunteer->volunteer->ivid), 'QRCODE,Q', 122, 148, 39, 39);
                     $pdf::image(url($volunteer->volunteer->photo_src), 21, 111, 76, 76);
                     $html1 = '<p></p><p></p><p></p><p></p><p></p><h1 style="text-align:center; width:100%; font-size: 40px;">'.$volunteer->form->form_translate->title.'</h1>';
+                    $pdf::SetFont('latob','b',15);
                     $pdf::writeHTMLCell(0, 0, '', '15', $html1, 0, 1, 0, true, '', true);
+                    $pdf::SetFont('latolatin','',15);
 
                     $html2 = '<p></p>
                     <table>
@@ -546,12 +550,42 @@ class CFormsController extends Controller
                     <h1 style="text-align:center;font-size:35px;">'.Str::upper($volunteer->position->form_position_translate->title).'</h1>';
                     $pdf::writeHTML($html3, true, false, true, false, '');
 
+                    if($request->withnumbers == "on")
+                    {
+                        $pdf::SetAutoPageBreak(0, 0);
+                        $pdf::AddPage("P");
+                        if($request->logocustom == "on")
+                        {
+                            $pdf::Image(url('/img/id/back1.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                            $pdf::Image(url($form->icon_src), 32, 262, '', 27, 'PNG');
+                        } else {
+                            $pdf::Image(url('/img/id/back2.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                        }
+                        $pdf::SetAutoPageBreak($auto_page_break, $bMargin);
+                        $html3 = '<p></p><p></p><p></p><p></p><p></p>
+                        <h1 style="text-align:center;">'.$request->name1.'</h1>
+                        <h1 style="text-align:center;">'.$request->number1.'</h1>
+                        <h1 style="text-align:center;">'.$request->name2.'</h1>
+                        <h1 style="text-align:center;">'.$request->number2.'</h1>
+                        <h1 style="text-align:center;">'.$request->name3.'</h1>
+                        <h1 style="text-align:center;">'.$request->number3.'</h1>
+                        <h1 style="text-align:center;">'.$request->name4.'</h1>
+                        <h1 style="text-align:center;">'.$request->number4.'</h1>
+                        <h1 style="text-align:center;">'.$request->name5.'</h1>
+                        <h1 style="text-align:center;">'.$request->number5.'</h1>
+                        <h1 style="text-align:center;">'.$request->name6.'</h1>
+                        <h1 style="text-align:center;">'.$request->number6.'</h1>
+                        <p style="font-size:5px;"></p>';
+                        $pdf::writeHTMLCell(0, 0, '', '15', $html3, 0, 1, 0, true, '', true);
+                    }
+
                 }
                 break;
             case(2):
                 foreach($volunteers as $volunteer)
                 {
                     $pdf::AddPage("P");
+                    $pdf::SetAutoPageBreak(0, 0);
 
                     if($request->logocustom == "on")
                     {
@@ -595,12 +629,14 @@ class CFormsController extends Controller
                 foreach($volunteers as $volunteer)
                 {
                     $pdf::AddPage("P");
+                    $pdf::SetAutoPageBreak(0, 0);
+
                     $pdf::Image(url('/img/id/3.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
 
                     $pdf::SetAutoPageBreak($auto_page_break, $bMargin);
                     $pdf::setPageMark();
 
-                    $pdf::SetFont('latolatinb','b',15);
+                    $pdf::SetFont('latob','b',15);
                     $html1 = '<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><h1 style="text-align:center; width:100%; font-size: 40px; font-weight:bold;">'.Str::upper($volunteer->form->form_translate->title).'</h1>';
                     $pdf::writeHTMLCell(0, 0, '', '15', $html1, 0, 1, 0, true, '', true);
                     $pdf::SetFont('latolatin','b',15);
@@ -653,7 +689,7 @@ class CFormsController extends Controller
                 foreach($volunteers as $volunteer)
                 {
                     $pdf::AddPage("P");
-
+                    $pdf::SetAutoPageBreak(0, 0);
                     if($request->logocustom == "on")
                     {
                         $pdf::Image(url('/img/id/4b.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
@@ -665,22 +701,29 @@ class CFormsController extends Controller
                     $pdf::SetAutoPageBreak($auto_page_break, $bMargin);
                     $pdf::setPageMark();
 
+                    $pdf::SetFont('latob','b',15);
                     $html1 = '<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><h1 style="color:#73b644; text-align:center; width:100%; font-size: 27px;">'.$volunteer->form->form_translate->title.'</h1>';
                     $pdf::writeHTMLCell(0, 0, '', '15', $html1, 0, 1, 0, true, '', true);
 
-                    $pdf::write2DBarcode(Bitly::getUrl(route('volunteer.id', $volunteer->volunteer->ivid)), 'QRCODE,Q', 31, 104, 65, 65);
+                    $pdf::SetFont('latolatin','',15);
+                    $pdf::write2DBarcode(route('volunteer.id', $volunteer->volunteer->ivid), 'QRCODE,Q', 31, 104, 65, 65);
 
                     $imageurl = url($volunteer->volunteer->photo_src);
                     $pdf::image($imageurl, '115', '104', '65', '65');
 
-                    $html2 = '<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
+                    $html2a = '<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
                     <h1 style="text-align:center;">'.$volunteer->volunteer->firstname.'</h1>
                     <p style="font-size:5px;"></p>
                     <h1 style="text-align:center">'.$volunteer->volunteer->lastname.'</h1>
                     <p style="font-size:5px;"></p>
-                    <h1 style="text-align:center">'.$volunteer->volunteer->name.'</h1>
+                    <h1 style="text-align:center">'.$volunteer->volunteer->name.'</h1>';
+                    $pdf::writeHTMLCell(0, 0, '', '15', $html2a, 0, 1, 0, true, '', true);
+
+                    $pdf::SetFont('latob','b',15);
+                    $html2b = '<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
                     <h2 style="text-align:center; color:#283b9b; font-size:35px;">'.$volunteer->position->form_position_translate->title.'</h2>';
-                    $pdf::writeHTMLCell(0, 0, '', '15', $html2, 0, 1, 0, true, '', true);
+                    $pdf::writeHTMLCell(0, 0, '', '15', $html2b, 0, 1, 0, true, '', true);
+                    $pdf::SetFont('latolatin','',15);
 
                     if($request->withnumbers == "on")
                     {
@@ -716,6 +759,7 @@ class CFormsController extends Controller
                 foreach($volunteers as $volunteer)
                 {
                     $pdf::AddPage("P");
+                    $pdf::SetAutoPageBreak(0, 0);
                     if($request->logocustom == "on")
                     {
                         $pdf::Image(url('/img/id/5b.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
@@ -727,23 +771,30 @@ class CFormsController extends Controller
                     $pdf::SetAutoPageBreak($auto_page_break, $bMargin);
                     $pdf::setPageMark();
 
+                    $pdf::SetFont('latob','b',15);
                     $html1 = '<p></p><p></p><p></p><p></p><p></p><h1 style="color:#204186; text-align:center; width:100%; font-size: 30px;">'.$volunteer->form->form_translate->title.'</h1>';
                     $pdf::writeHTMLCell(0, 0, '', '15', $html1, 0, 1, 0, true, '', true);
+                    $pdf::SetFont('latolatin','',15);
 
-                    $pdf::write2DBarcode(Bitly::getUrl(route('volunteer.id', $volunteer->volunteer->ivid)), 'QRCODE,Q', 31, 84, 65, 65);
+                    $pdf::write2DBarcode(route('volunteer.id', $volunteer->volunteer->ivid), 'QRCODE,Q', 31, 84, 65, 65);
 
                     $imageurl = url($volunteer->volunteer->photo_src);
                     $pdf::image($imageurl, '115', '84', '65', '65');
 
-                    $html2 = '<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
+                    $html2a = '<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
                     <h1 style="text-align:center;">'.$volunteer->volunteer->firstname.'</h1>
                     <p style="font-size:5px;"></p>
                     <h1 style="text-align:center">'.$volunteer->volunteer->lastname.'</h1>
                     <p style="font-size:5px;"></p>
                     <h1 style="text-align:center">'.$volunteer->volunteer->name.'</h1>
-                    <h2 style="text-align:center; color:#283b9b; font-size:35px;">'.$volunteer->position->form_position_translate->title.'</h2>';
-                    $pdf::writeHTMLCell(0, 0, '', '15', $html2, 0, 1, 0, true, '', true);
+                    <h2 style="text-align:center; color:#283b9b; font-size:35px;">';
+                    $pdf::writeHTMLCell(0, 0, '', '15', $html2a, 0, 1, 0, true, '', true);
 
+                    $pdf::SetFont('latob','b',15);
+                    $html2b = '<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
+                    <h2 style="text-align:center; color:#283b9b; font-size:35px;">'.$volunteer->position->form_position_translate->title.'</h2>';
+                    $pdf::writeHTMLCell(0, 0, '', '15', $html2b, 0, 1, 0, true, '', true);
+                    $pdf::SetFont('latolatin','',15);
 
                     if($request->withnumbers == "on")
                     {

@@ -86,13 +86,13 @@
                                     </div>
                                     <div class="col-4">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" value="choose" name="receiver" id="receiverradio2">
+                                            <input class="form-check-input" type="radio"  name="receiver"value="choose" id="receiverradio2">
                                             <label class="custom-control-label" for="receiverradio2">{{ __('Wybierz wolontariuszy') }}</label>
                                           </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" value="custom" name="receiver" id="receiverradio3">
+                                            <input class="form-check-input" type="radio" name="receiver" value="custom" id="receiverradio3">
                                             <label class="custom-control-label" for="receiverradio3">{{ __('Wprowadź email odbiorcy') }}</label>
                                           </div>
                                     </div>
@@ -114,7 +114,7 @@
                                         </div>
                                         <div class="modal-body">
                                             <label for="receiver-select">{{ __('Kliknij w polę poniżej by widzieć listę') }}</label>
-                                            <select name="receiver-select" id="receiver-select" class="form-control @error('title') is-invaid @enderror" multiple>
+                                            <select name="receiver_select" id="receiver-select" class="form-control @error('title') is-invaid @enderror" multiple>
                                                 @forelse ($volunteers as $volunteer)
                                                     <option value="{{ $volunteer->ivid }}">{{ $volunteer->firstname." ".$volunteer->lastname." (".$volunteer->name.")" }}</option>
                                                 @empty
@@ -137,7 +137,7 @@
                             </div>
                             <div class="form-input d-none" id="enter-email-div">
                                 <label for="email">{{ __('Wprowadź email odbiorcy') }}</label>
-                                <input type="email" name="email" id="email" class="form-control @error('email') is-invaid @enderror" placeholder="{{ __('Wpisz email...') }}" required>
+                                <input type="email" name="email" id="email" class="form-control @error('email') is-invaid @enderror" placeholder="{{ __('Wpisz email...') }}">
                                 @error('email')
                                     <div class="text-danger w-100 d-block">
                                         {{ $message }}

@@ -26,7 +26,6 @@ class VSettingsController extends Controller
 {
     public function index(Request $request)
     {
-
         $volunteer = Volunteer::where('user_id', Auth::id())->firstorfail();
         $settings = User_setting::where('user_id', Auth::id())->firstOrFail();
         $volunteer_languages = Volunteer_language::where('user_id', Auth::id())->firstOrFail(['language1', 'language2', 'language3', 'language4', 'language5'])->toArray();
@@ -39,7 +38,6 @@ class VSettingsController extends Controller
         $languages = System_language::all(['id', 'language', $language." AS lang", 'native']);
         if($settings->google2fa == 0 && $settings->google2fa_code == null)
         {
-
             $google2fa = new Google2FA($request);
             $secret = $google2fa->generateSecretKey(32);
             $qrCodeUrl = $google2fa->getQRCodeUrl('IOSW','(Wolontariat MOSiR Rybnik)', $secret);
@@ -51,12 +49,6 @@ class VSettingsController extends Controller
         } else {
             return view('volunteer.settings', ['volunteer' => $volunteer, 'settings' => $settings, 'volunteer_languages' => $volunteer_languages, 'languages' => $languages,]);
         }
-    }
-
-    public function agreement()
-    {
-        $agreement = User::where('id', Auth::id())->firstOrFail();
-        if($agreement != null) return response()->file(substr($agreement->agreement_src, 1)); else return back();
     }
 
     public function profile(Request $request)
@@ -76,7 +68,7 @@ class VSettingsController extends Controller
             'birth' => 'required|date',
             'gender' => 'required|string|size:1',
             'language' => 'required|string|size:2',
-            'known_languages' => 'required|array|between:1,5',
+            'known_languages' => 'nullable|array|between:1,5',
         ]);
 
         User::where('id', Auth::id())->firstOrFail()->update([
@@ -97,9 +89,9 @@ class VSettingsController extends Controller
             'city' => $validated['city'],
             'description' => $validated['description'],
         ]);
-        
+
         Volunteer_language::where('user_id', Auth::id())->firstOrFail()->update([
-            'language1' => $validated['known_languages'][0],
+            'language1' => (isset($validated['known_languages'][0])) ? $validated['known_languages'][0] : null,
             'language2' => (isset($validated['known_languages'][1])) ? $validated['known_languages'][1] : null,
             'language3' => (isset($validated['known_languages'][2])) ? $validated['known_languages'][2] : null,
             'language4' => (isset($validated['known_languages'][3])) ? $validated['known_languages'][3] : null,
@@ -187,7 +179,6 @@ class VSettingsController extends Controller
 
     public function save_notifications(Request $request)
     {
-        //dd($request->all());
         User_setting::where('user_id', Auth::id())->firstOrFail()->update([
             'messages_email' => ($request->notificationsettingscheck11 == "on") ? 1 : 0,
             'messages_push' => ($request->notificationsettingscheck12 == "on") ? 1 : 0,
@@ -252,6 +243,12 @@ class VSettingsController extends Controller
         } else {
             return back()->with(['agreement_err' => true]);
         }
+    }
+
+    public function agreement()
+    {
+        $agreement = User::where('id', Auth::id())->firstOrFail();
+        if($agreement != null) return response()->file(substr($agreement->agreement_src, 1)); else return back();
     }
 
     // public function google2fa(Request $request)
