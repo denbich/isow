@@ -152,10 +152,10 @@ class CHomeController extends Controller
     public function send_mail(Request $request)
     {
         $validated = $request->validate([
-            'recivier' => 'required',
-            'receiver_select' => 'nullable|required_if:recivier,choose',
-            'email' => 'nullable|email|required_if:recivier,custom',
             'title' => 'required|max:255',
+            'receiver' => 'required',
+            'receiver_select' => 'nullable|required_if:receiver,choose|array',
+            'email' => 'nullable|email|required_if:receiver,custom',
             'content' => 'required',
         ]);
 
@@ -164,7 +164,7 @@ class CHomeController extends Controller
             'content' => str_replace('"', "'", str_replace("\r\n", '', $validated['content'])),
         );
 
-        switch($validated['receiver_select'])
+        switch($validated['receiver'])
         {
             case("all"):
                 Mail::bcc(User::where('role', 'volunteer')->whereHas('settings', function($query){
@@ -174,7 +174,7 @@ class CHomeController extends Controller
             case("choose"):
                 Mail::bcc(User::where([['role', 'volunteer']])->whereHas('settings', function($query){
                     $query->where('notifications_email', 1);
-                })->whereIn('ivid', $validated['recivier_select'])->pluck('email'))->send(new CoordinatorMessage($datam));
+                })->whereIn('ivid', $validated['receiver_select'])->pluck('email'))->send(new CoordinatorMessage($datam));
             break;
             case("custom"):
                 Mail::to($validated['email'])->send(new CoordinatorMessage($datam));
@@ -182,6 +182,7 @@ class CHomeController extends Controller
         }
 
         Sent_mail::create([
+            'ivid' => Str::uuid(),
             'sender_id' => Auth::id(),
             'title' => $validated['title'],
             'content' => str_replace('"', "'", str_replace("\r\n", '', $validated['content']))

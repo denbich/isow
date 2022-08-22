@@ -69,7 +69,7 @@
                             @csrf
                             <div class="form-group">
                                 <label for="title">{{ __('Tytuł maila') }}</label>
-                                <input type="text" name="title" id="title" class="form-control @error('title') is-invaid @enderror" required>
+                                <input type="text" name="title" id="title" value="{{ old('title', '') }}" class="form-control @error('title') is-invaid @enderror" required>
                                 @error('title')
                                     <div class="text-danger w-100 d-block">
                                         {{ $message }}
@@ -80,25 +80,30 @@
                                 <div class="row">
                                     <div class="col-4">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="receiver" value="all" id="receiverradio1" checked>
+                                            <input class="form-check-input" type="radio" name="receiver" value="all" id="receiverradio1" checked @checked(old('receiver') == "all")>
                                             <label class="custom-control-label" for="receiverradio1">{{ __('Wszyscy wolontariusze') }}</label>
                                           </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio"  name="receiver"value="choose" id="receiverradio2">
+                                            <input class="form-check-input" type="radio"  name="receiver" value="choose" id="receiverradio2" @checked(old('receiver') == "choose")>
                                             <label class="custom-control-label" for="receiverradio2">{{ __('Wybierz wolontariuszy') }}</label>
                                           </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="receiver" value="custom" id="receiverradio3">
+                                            <input class="form-check-input" type="radio" name="receiver" value="custom" id="receiverradio3" @checked(old('receiver') == "custom")>
                                             <label class="custom-control-label" for="receiverradio3">{{ __('Wprowadź email odbiorcy') }}</label>
                                           </div>
                                     </div>
                                 </div>
+                                @error('receiver')
+                                    <div class="text-danger w-100 d-block">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
-                            <div class="form-input d-none" id="choose-volunteers-div">
+                            <div class="form-input @if (old('receiver') != "choose") d-none @endif" id="choose-volunteers-div">
                                 <div class="w-100 text-center">
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#volunteersModal">{{ __('Wybierz wolontariuszy') }}</button>
                                 </div>
@@ -114,7 +119,7 @@
                                         </div>
                                         <div class="modal-body">
                                             <label for="receiver-select">{{ __('Kliknij w polę poniżej by widzieć listę') }}</label>
-                                            <select name="receiver_select" id="receiver-select" class="form-control @error('title') is-invaid @enderror" multiple>
+                                            <select name="receiver_select[]" id="receiver-select" class="form-control @error('title') is-invaid @enderror" multiple>
                                                 @forelse ($volunteers as $volunteer)
                                                     <option value="{{ $volunteer->ivid }}">{{ $volunteer->firstname." ".$volunteer->lastname." (".$volunteer->name.")" }}</option>
                                                 @empty
@@ -128,30 +133,34 @@
                                       </div>
                                     </div>
                                   </div>
-
-                                @error('receiver-select')
-                                    <div class="text-danger w-100 d-block">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
                             </div>
-                            <div class="form-input d-none" id="enter-email-div">
+                            <div class="form-input @if (old('receiver') != "custom") d-none @endif" id="enter-email-div">
                                 <label for="email">{{ __('Wprowadź email odbiorcy') }}</label>
                                 <input type="email" name="email" id="email" class="form-control @error('email') is-invaid @enderror" placeholder="{{ __('Wpisz email...') }}">
-                                @error('email')
-                                    <div class="text-danger w-100 d-block">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
                             </div>
+                            @error('receiver_select')
+                            <div class="text-danger w-100 d-block">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                            @error('email')
+                                <div class="text-danger w-100 d-block">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                             <div class="form-input">
                                 <label for="content">{{ __('Treść maila') }}</label>
                                 <textarea name="content" id="content" cols="30" rows="10"></textarea>
+                                @error('content')
+                                <div class="text-danger w-100 d-block">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                             </div>
                             <div class="form-input">
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <button type="button" class="btn bg-gradient-dark w-100 mt-3">{{ __('Podgląd') }}</button>
+                                        <button type="button" class="btn bg-gradient-dark w-100 mt-3" disabled>{{ __('Podgląd') }}</button>
                                     </div>
                                     <div class="col-lg-6">
                                         <button type="submit" id="send_mail_button" class="btn btn-primary w-100 mt-3">{{ __('Wyślij') }}</button>
