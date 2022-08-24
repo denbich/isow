@@ -293,9 +293,9 @@ class CFormsController extends Controller
                 $pdf::setLanguageArray($lg);
                 $pdf::SetFont('latolatin','b',15); //dejavusans
 
-                $pdf::Image(url('/img/logowmr.png'), '', 4, '', 30, 'PNG');
-                $pdf::Image(url($form->icon_src), '', 8, '', 22, 'PNG', '', '', false, 300, 'C', false, false, 1, false, false, false);
-                $pdf::Image(url('/img/logomosir.png'), '', 12, '', 12, 'PNG', '', '', false, 300, 'R', false, false, 1, false, false, false);
+                $pdf::Image(public_path('/img/logowmr.png'), '', 4, '', 30, 'PNG');
+                $pdf::Image(public_path($form->icon_src), '', 8, '', 22, 'PNG', '', '', false, 300, 'C', false, false, 1, false, false, false);
+                $pdf::Image(public_path('/img/logomosir.png'), '', 12, '', 12, 'PNG', '', '', false, 300, 'R', false, false, 1, false, false, false);
                 $pdf::writeHTML("<p></p><p></p><p></p>", true, false, true, false, '');
 
                 $pdf::Cell(0, 15, $form->form_translate->title.' - Lista zapisanych wolontariuszy', 0, '1', 'C', 0, '', 0, false, 'M', 'M');
@@ -523,16 +523,16 @@ class CFormsController extends Controller
                     $pdf::SetAutoPageBreak(0, 0);
                     if($request->logocustom == "on")
                     {
-                        $pdf::Image(url('/img/id/1b.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
-                        $pdf::Image(url($form->icon_src), 32, 7, '', 37, 'PNG');
+                        $pdf::Image(public_path('/img/id/1b.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                        $pdf::Image(public_path($form->icon_src), 32, 7, '', 37, 'PNG');
                     } else {
-                        $pdf::Image(url('/img/id/1a.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                        $pdf::Image(public_path('/img/id/1a.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
                     }
 
                     $pdf::SetAutoPageBreak($auto_page_break, $bMargin);
                     $pdf::setPageMark();
                     $pdf::write2DBarcode(route('volunteer.id', $volunteer->volunteer->ivid), 'QRCODE,Q', 122, 148, 39, 39);
-                    $pdf::image(url($volunteer->volunteer->photo_src), 21, 111, 76, 76);
+                    $pdf::image(public_path($volunteer->volunteer->photo_src), 21, 111, 76, 76);
                     $html1 = '<p></p><p></p><p></p><p></p><p></p><h1 style="text-align:center; width:100%; font-size: 40px;">'.$volunteer->form->form_translate->title.'</h1>';
                     $pdf::SetFont('latob','b',15);
                     $pdf::writeHTMLCell(0, 0, '', '15', $html1, 0, 1, 0, true, '', true);
@@ -555,10 +555,10 @@ class CFormsController extends Controller
                         $pdf::AddPage("P");
                         if($request->logocustom == "on")
                         {
-                            $pdf::Image(url('/img/id/back1.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
-                            $pdf::Image(url($form->icon_src), 32, 262, '', 27, 'PNG');
+                            $pdf::Image(public_path('/img/id/back1.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                            $pdf::Image(public_path($form->icon_src), 32, 262, '', 27, 'PNG');
                         } else {
-                            $pdf::Image(url('/img/id/back2.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                            $pdf::Image(public_path('/img/id/back2.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
                         }
                         $pdf::SetAutoPageBreak($auto_page_break, $bMargin);
                         $html3 = '<p></p><p></p><p></p><p></p><p></p>
@@ -588,10 +588,10 @@ class CFormsController extends Controller
 
                     if($request->logocustom == "on")
                     {
-                        $pdf::Image(url('/img/id/2b.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
-                        $pdf::Image(url($form->icon_src), 32, 7, '', 37, 'PNG');
+                        $pdf::Image(public_path('/img/id/2b.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                        $pdf::Image(public_path($form->icon_src), 32, 7, '', 37, 'PNG');
                     } else {
-                        $pdf::Image(url('/img/id/2a.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                        $pdf::Image(public_path('/img/id/2a.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
                     }
 
                     if($request->withnumbers == "on")
@@ -600,10 +600,10 @@ class CFormsController extends Controller
                         $pdf::AddPage("P");
                         if($request->logocustom == "on")
                         {
-                            $pdf::Image(url('/img/id/back1.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
-                            $pdf::Image(url($form->icon_src), 32, 262, '', 27, 'PNG');
+                            $pdf::Image(public_path('/img/id/back1.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                            $pdf::Image(public_path($form->icon_src), 32, 262, '', 27, 'PNG');
                         } else {
-                            $pdf::Image(url('/img/id/back2.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                            $pdf::Image(public_path('/img/id/back2.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
                         }
                         $pdf::SetAutoPageBreak($auto_page_break, $bMargin);
                         $html3 = '<p></p><p></p><p></p><p></p><p></p>
@@ -630,7 +630,7 @@ class CFormsController extends Controller
                     $pdf::AddPage("P");
                     $pdf::SetAutoPageBreak(0, 0);
 
-                    $pdf::Image(url('/img/id/3.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                    $pdf::Image(public_path('/img/id/3.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
 
                     $pdf::SetAutoPageBreak($auto_page_break, $bMargin);
                     $pdf::setPageMark();
@@ -639,9 +639,9 @@ class CFormsController extends Controller
                     $html1 = '<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><h1 style="text-align:center; width:100%; font-size: 40px; font-weight:bold;">'.Str::upper($volunteer->form->form_translate->title).'</h1>';
                     $pdf::writeHTMLCell(0, 0, '', '15', $html1, 0, 1, 0, true, '', true);
                     $pdf::SetFont('latolatin','b',15);
-                    //Bitly::getUrl(route('volunteer.id', $volunteer->volunteer->ivid))
+                    //Bitly::getpublic_path(route('volunteer.id', $volunteer->volunteer->ivid))
                     $pdf::write2DBarcode(route('volunteer.id', $volunteer->volunteer->ivid), 'QRCODE,Q', 127, 167, 39, 39);
-                    $pdf::image(url($volunteer->volunteer->photo_src), 21, 130, 76, 76);
+                    $pdf::image(public_path($volunteer->volunteer->photo_src), 21, 130, 76, 76);
 
                     $html2 = '<p></p>
                     <table>
@@ -660,10 +660,10 @@ class CFormsController extends Controller
                         $pdf::AddPage("P");
                         if($request->logocustom == "on")
                         {
-                            $pdf::Image(url('/img/id/back1.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
-                            $pdf::Image(url($form->icon_src), 32, 262, '', 27, 'PNG');
+                            $pdf::Image(public_path('/img/id/back1.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                            $pdf::Image(public_path($form->icon_src), 32, 262, '', 27, 'PNG');
                         } else {
-                            $pdf::Image(url('/img/id/back2.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                            $pdf::Image(public_path('/img/id/back2.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
                         }
                         $pdf::SetAutoPageBreak($auto_page_break, $bMargin);
                         $html3 = '<p></p><p></p><p></p><p></p><p></p>
@@ -691,10 +691,10 @@ class CFormsController extends Controller
                     $pdf::SetAutoPageBreak(0, 0);
                     if($request->logocustom == "on")
                     {
-                        $pdf::Image(url('/img/id/4b.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
-                        $pdf::Image(url($form->icon_src), 28, 7, '', 37, 'PNG');
+                        $pdf::Image(public_path('/img/id/4b.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                        $pdf::Image(public_path($form->icon_src), 28, 7, '', 37, 'PNG');
                     } else {
-                        $pdf::Image(url('/img/id/4a.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                        $pdf::Image(public_path('/img/id/4a.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
                     }
 
                     $pdf::SetAutoPageBreak($auto_page_break, $bMargin);
@@ -707,8 +707,7 @@ class CFormsController extends Controller
                     $pdf::SetFont('latolatin','',15);
                     $pdf::write2DBarcode(route('volunteer.id', $volunteer->volunteer->ivid), 'QRCODE,Q', 31, 104, 65, 65);
 
-                    $imageurl = url($volunteer->volunteer->photo_src);
-                    $pdf::image($imageurl, '115', '104', '65', '65');
+                    $pdf::image(public_path($volunteer->volunteer->photo_src), '115', '104', '65', '65');
 
                     $html2a = '<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
                     <h1 style="text-align:center;">'.$volunteer->volunteer->firstname.'</h1>
@@ -730,10 +729,10 @@ class CFormsController extends Controller
                         $pdf::AddPage("P");
                         if($request->logocustom == "on")
                         {
-                            $pdf::Image(url('/img/id/back1.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
-                            $pdf::Image(url($form->icon_src), 32, 262, '', 27, 'PNG');
+                            $pdf::Image(public_path('/img/id/back1.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                            $pdf::Image(public_path($form->icon_src), 32, 262, '', 27, 'PNG');
                         } else {
-                            $pdf::Image(url('/img/id/back2.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                            $pdf::Image(public_path('/img/id/back2.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
                         }
                         $pdf::SetAutoPageBreak($auto_page_break, $bMargin);
                         $html3 = '<p></p><p></p><p></p><p></p><p></p>
@@ -761,10 +760,10 @@ class CFormsController extends Controller
                     $pdf::SetAutoPageBreak(0, 0);
                     if($request->logocustom == "on")
                     {
-                        $pdf::Image(url('/img/id/5b.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
-                        $pdf::Image(url($form->icon_src), 32, 7, '', 37, 'PNG');
+                        $pdf::Image(public_path('/img/id/5b.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                        $pdf::Image(public_path($form->icon_src), 32, 7, '', 37, 'PNG');
                     } else {
-                        $pdf::Image(url('/img/id/5a.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                        $pdf::Image(public_path('/img/id/5a.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
                     }
 
                     $pdf::SetAutoPageBreak($auto_page_break, $bMargin);
@@ -777,8 +776,7 @@ class CFormsController extends Controller
 
                     $pdf::write2DBarcode(route('volunteer.id', $volunteer->volunteer->ivid), 'QRCODE,Q', 31, 84, 65, 65);
 
-                    $imageurl = url($volunteer->volunteer->photo_src);
-                    $pdf::image($imageurl, '115', '84', '65', '65');
+                    $pdf::image(public_path($volunteer->volunteer->photo_src), '115', '84', '65', '65');
 
                     $html2a = '<p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p>
                     <h1 style="text-align:center;">'.$volunteer->volunteer->firstname.'</h1>
@@ -801,10 +799,10 @@ class CFormsController extends Controller
                         $pdf::AddPage("P");
                         if($request->logocustom == "on")
                         {
-                            $pdf::Image(url('/img/id/back1.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
-                            $pdf::Image(url($form->icon_src), 32, 262, '', 27, 'PNG');
+                            $pdf::Image(public_path('/img/id/back1.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                            $pdf::Image(public_path($form->icon_src), 32, 262, '', 27, 'PNG');
                         } else {
-                            $pdf::Image(url('/img/id/back2.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
+                            $pdf::Image(public_path('/img/id/back2.png'), 0, 0, 210, 297, '', '', '', false, 300, '', false, false, 0);
                         }
                         $pdf::SetAutoPageBreak($auto_page_break, $bMargin);
                         $html3 = '<p></p><p></p><p></p><p></p><p></p>
@@ -866,9 +864,9 @@ class CFormsController extends Controller
         $pdf::SetAutoPageBreak($auto_page_break, $bMargin);
         $pdf::setPageMark();
 
-        $pdf::Image(url('/img/logowmr.png'), '', '5', '', 37, 'PNG');
-        $pdf::Image(url($form->icon_src), '', '6', '', 35, 'PNG', '', '', false, 300, 'C', false, false, 1, false, false, false);
-        $pdf::Image(url('/img/logomosir.png'), '', '18', '', 15, 'PNG', '', '', false, 300, 'R', false, false, 1, false, false, false);
+        $pdf::Image(public_path('/img/logowmr.png'), '', '5', '', 37, 'PNG');
+        $pdf::Image(public_path($form->icon_src), '', '6', '', 35, 'PNG', '', '', false, 300, 'C', false, false, 1, false, false, false);
+        $pdf::Image(public_path('/img/logomosir.png'), '', '18', '', 15, 'PNG', '', '', false, 300, 'R', false, false, 1, false, false, false);
 
         $html1 = '<p></p><p></p><p></p><p></p><p></p><h1 style="text-align:center;">'.$form->form_translate->title.'</h1>';
         $html2 = '<p></p>
@@ -904,14 +902,14 @@ class CFormsController extends Controller
         $pdf::SetFont('latolatin','',11);
         $pdf::writeHTML($html2, true, false, true, false, '');
         $pdf::AddPage("P");
-        $pdf::Image(url('/img/logowmr.png'), '', '5', '', 37, 'PNG');
-        $pdf::Image(url($form->icon_src), '', '6', '', 35, 'PNG', '', '', false, 300, 'C', false, false, 1, false, false, false);
-        $pdf::Image(url('/img/logomosir.png'), '', '18', '', 15, 'PNG', '', '', false, 300, 'R', false, false, 1, false, false, false);
+        $pdf::Image(public_path('/img/logowmr.png'), '', '5', '', 37, 'PNG');
+        $pdf::Image(public_path($form->icon_src), '', '6', '', 35, 'PNG', '', '', false, 300, 'C', false, false, 1, false, false, false);
+        $pdf::Image(public_path('/img/logomosir.png'), '', '18', '', 15, 'PNG', '', '', false, 300, 'R', false, false, 1, false, false, false);
         $pdf::writeHTML($html3, true, false, true, false, '');
         $pdf::AddPage("P");
-        $pdf::Image(url('/img/logowmr.png'), '', '5', '', 37, 'PNG');
-        $pdf::Image(url($form->icon_src), '', '6', '', 35, 'PNG', '', '', false, 300, 'C', false, false, 1, false, false, false);
-        $pdf::Image(url('/img/logomosir.png'), '', '18', '', 15, 'PNG', '', '', false, 300, 'R', false, false, 1, false, false, false);
+        $pdf::Image(public_path('/img/logowmr.png'), '', '5', '', 37, 'PNG');
+        $pdf::Image(public_path($form->icon_src), '', '6', '', 35, 'PNG', '', '', false, 300, 'C', false, false, 1, false, false, false);
+        $pdf::Image(public_path('/img/logomosir.png'), '', '18', '', 15, 'PNG', '', '', false, 300, 'R', false, false, 1, false, false, false);
         $pdf::writeHTML($html4, true, false, true, false, '');
         $pdf::SetFont('latolatin','b',10);
 
@@ -932,15 +930,15 @@ class CFormsController extends Controller
             $pdf::cell('15','10','','1','1','C');
         }
         $pdf::AddPage("P");
-        $pdf::Image(url('/img/logowmr.png'), '', '5', '', 37, 'PNG');
-        $pdf::Image(url($form->icon_src), '', '6', '', 35, 'PNG', '', '', false, 300, 'C', false, false, 1, false, false, false);
-        $pdf::Image(url('/img/logomosir.png'), '', '18', '', 15, 'PNG', '', '', false, 300, 'R', false, false, 1, false, false, false);
+        $pdf::Image(public_path('/img/logowmr.png'), '', '5', '', 37, 'PNG');
+        $pdf::Image(public_path($form->icon_src), '', '6', '', 35, 'PNG', '', '', false, 300, 'C', false, false, 1, false, false, false);
+        $pdf::Image(public_path('/img/logomosir.png'), '', '18', '', 15, 'PNG', '', '', false, 300, 'R', false, false, 1, false, false, false);
         $pdf::writeHTML($html5, true, false, true, false, '');
 
         $pdf::AddPage("L");
-        $pdf::Image(url('/img/logowmr.png'), '', '8', '', 24, 'PNG');
-        $pdf::Image(url($form->icon_src), '', '8', '', 22, 'PNG', '', '', false, 300, 'C', false, false, 1, false, false, false);
-        $pdf::Image(url('/img/logomosir.png'), '', '12', '', 12, 'PNG', '', '', false, 300, 'R', false, false, 1, false, false, false);
+        $pdf::Image(public_path('/img/logowmr.png'), '', '8', '', 24, 'PNG');
+        $pdf::Image(public_path($form->icon_src), '', '8', '', 22, 'PNG', '', '', false, 300, 'C', false, false, 1, false, false, false);
+        $pdf::Image(public_path('/img/logomosir.png'), '', '12', '', 12, 'PNG', '', '', false, 300, 'R', false, false, 1, false, false, false);
 
         $pdf::writeHTML("<p></p><p></p><p></p><p></p><p></p>", true, false, true, false, '');
         $pdf::SetFont('latolatin','b',15);
