@@ -220,8 +220,7 @@ bg-gray-200
           </ul>
           <ul class="navbar-nav d-lg-block d-none">
             <li class="nav-item">
-              @guest <a href="{{ route('register') }}" class="btn btn-sm mb-0 me-1 btn-primary">{{ __('main.signin') }}</a> @endguest
-              @auth <a href="{{ route('loginauth') }}" class="btn btn-sm mb-0 me-1 btn-primary">Przejdź do panelu</a> @endauth
+              <a href="{{ route('register') }}" class="btn btn-sm mb-0 me-1 btn-primary">{{ __('main.signin') }}</a>
             </li>
           </ul>
         </div>
@@ -348,7 +347,7 @@ bg-gray-200
                 </div>
 
                 <div class="form-group">
-                    <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" style="resize: none" cols="30" rows="4" placeholder="{{ __('Powiedz coś o sobie w paru słowach') }}">{{ old('description', '') }}</textarea>
+                    <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description" style="resize: none" cols="30" rows="4" placeholder="{{ __('index.register.description') }}">{{ old('description', '') }}</textarea>
                     @error('description')
                         <span class="text-danger text-sm" role="alert">
                             <strong>{{ $message }}</strong>
@@ -448,7 +447,7 @@ bg-gray-200
                 <div class="text-center">
                   <button type="submit" class="btn bg-gradient-dark w-100 my-2">{{ __('main.signin') }}</button>
                 </div>
-                <p class="text-sm mt-3 mb-0">Already have an account? <a href="javascript:;" class="text-dark font-weight-bolder">Sign in</a></p>
+                <p class="text-sm mt-3 mb-0">{{ __('index.footer.login') }} <a href="{{ route('login') }}" class="text-dark font-weight-bolder">{{ __('main.login') }}</a></p>
               </form>
             </div>
           </div>

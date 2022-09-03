@@ -12,6 +12,7 @@ return [
     'cancel' => 'Anuluj',
     'error' => 'Błąd',
     'alert' => 'Alert',
+    'gotopanel' => 'Przejdź do panelu',
 
     'today' => 'Dziś',
     'month' => 'Miesiąc',

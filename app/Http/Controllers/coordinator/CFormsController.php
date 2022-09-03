@@ -667,17 +667,17 @@ class CFormsController extends Controller
                         }
                         $pdf::SetAutoPageBreak($auto_page_break, $bMargin);
                         $html3 = '<p></p><p></p><p></p><p></p><p></p>
-                        <h1 style="text-align:center;">'.$request->name1.'</h1>
+                        <h1 style="text-align:center; font-weight:bold;">'.$request->name1.'</h1>
                         <h1 style="text-align:center;">'.$request->number1.'</h1>
-                        <h1 style="text-align:center;">'.$request->name2.'</h1>
+                        <h1 style="text-align:center;font-weight:bold;">'.$request->name2.'</h1>
                         <h1 style="text-align:center;">'.$request->number2.'</h1>
-                        <h1 style="text-align:center;">'.$request->name3.'</h1>
+                        <h1 style="text-align:center;font-weight:bold;">'.$request->name3.'</h1>
                         <h1 style="text-align:center;">'.$request->number3.'</h1>
-                        <h1 style="text-align:center;">'.$request->name4.'</h1>
+                        <h1 style="text-align:center;font-weight:bold;">'.$request->name4.'</h1>
                         <h1 style="text-align:center;">'.$request->number4.'</h1>
-                        <h1 style="text-align:center;">'.$request->name5.'</h1>
+                        <h1 style="text-align:center;font-weight:bold;">'.$request->name5.'</h1>
                         <h1 style="text-align:center;">'.$request->number5.'</h1>
-                        <h1 style="text-align:center;">'.$request->name6.'</h1>
+                        <h1 style="text-align:center;font-weight:bold;">'.$request->name6.'</h1>
                         <h1 style="text-align:center;">'.$request->number6.'</h1>
                         <p style="font-size:5px;"></p>';
                         $pdf::writeHTMLCell(0, 0, '', '15', $html3, 0, 1, 0, true, '', true);

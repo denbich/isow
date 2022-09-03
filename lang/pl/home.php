@@ -9,7 +9,7 @@ return [
         'instagram' => 'Instagram',
     ],
     'header' => 'Wolontariat MOSiR Rybnik',
-    'subheader' => 'Internetowy System Obsługi Wolontariatu (ISOW)',
+    'subheader' => 'Internetowy System Obsługi Wolontariatu (Volit)',
     'text' => 'Wolontariusze MOSiR Rybnik to aktywna społeczność, która angażuje się w organizację wydarzeń na terenie całego Rybnika organizowanych przez Miejski Ośrodek Sportu i Rekreacji w Rybniku!',
     'jointous' => 'Dołącz do nas!',
     'section1' => [

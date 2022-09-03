@@ -35,8 +35,7 @@ return [
         'title' => 'Volunteer panel',
         'id' => 'Your ID',
         'points' => 'Points',
-        'headerukraine' => '#PomagamUkrainie capaign',
-        'textukraine' => 'Click here to sign up!',
+        'agreement' => 'Agreement validity',
         'c-prizes' => 'Number of prizes',
         'c-forms' => 'Number of forms',
         'posts' => [
@@ -55,8 +54,14 @@ return [
             'button' => 'See more forms',
             'err' => 'No active forms!',
         ],
-        'notifications' => [
-            'title' => 'Notifications',
+        'orders' => [
+            'title' => 'Your orders',
+            'error' => 'No orders!',
+            'date' => 'Order date:',
+            'ordered' => 'Ordered',
+            'ready' => 'Ready to pick up',
+            'collected' => 'Received',
+            'status' => 'Status:',
         ],
         'help' => [
             'title' => 'Help',

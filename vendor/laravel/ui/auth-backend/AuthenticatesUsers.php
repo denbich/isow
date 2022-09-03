@@ -165,11 +165,15 @@ trait AuthenticatesUsers
      */
     public function logout(Request $request)
     {
+        $lang = session('locale');
+        
         $this->guard()->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+
+        session(['locale' => $lang]);
 
         if ($response = $this->loggedOut($request)) {
             return $response;

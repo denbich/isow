@@ -103,16 +103,21 @@ class VSettingsController extends Controller
 
     public function password(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        // $validated = Validator::make($request->all(), [
+        //     'old_password' => ['required', 'string', 'max:255'],
+        //     'password' => ['string', 'min:8', 'confirmed', 'required_with:old_password', 'different:old_password'],
+        // ]);
+
+        //if ($validated->fails()) return redirect()->route('v.settings', '/#password')->withErrors($validated)->withInput();
+
+        $validated = $request->validate([
             'old_password' => ['required', 'string', 'max:255'],
             'password' => ['string', 'min:8', 'confirmed', 'required_with:old_password', 'different:old_password'],
         ]);
 
-        if ($validator->fails()) return redirect()->route('v.settings', '/#password')->withErrors($validator)->withInput();
-
         $user = User::where('id', Auth::id())->firstOrFail();
-        if (Hash::check($validator['old_password'], Auth::user()->password)) {
-            $user->update(['password' => Hash::make($validator['password'])]);
+        if (Hash::check($validated['old_password'], Auth::user()->password)) {
+            $user->update(['password' => Hash::make($validated['password'])]);
             return redirect()->route('v.settings', '/#password')->with(['password_changed' => true]);
         } else {
             return redirect()->route('v.settings', '/#password')->with(['password_error' => true]);

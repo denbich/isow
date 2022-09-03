@@ -9,7 +9,7 @@ return [
         'instagram' => 'Instagram',
     ],
     'header' => 'Volunteering at MOSiR Rybnik',
-    'subheader' => 'Internet Volunteer Service System (ISOW)',
+    'subheader' => 'Internet Volunteer Service System (Volit)',
     'text' => 'Volunteers of MOSiR Rybnik is an active community that is involved in the organization of events throughout Rybnik organized by the Municipal Sports and Recreation Center in Rybnik!',
     'jointous' => 'Join to us!',
     'section1' => [

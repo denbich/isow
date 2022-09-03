@@ -11,33 +11,24 @@ return [
     'footer' => [
         'rememberpwd' => 'Forgot password?',
         'createaccount' => "Don't have an account?",
-        'login' => 'Already have an account? log in',
+        'login' => 'Already have an account?',
         'regulations' => 'Volunteer regulations',
         'codex' => 'Volunteer codex',
         'privacypolicy' => 'Privacy policy',
     ],
 
     'login' => [
-        'title' => 'Log into ISOW',
+        'title' => 'Log into Volit',
         'type-login' => 'Type email...',
         'type-password' => "Password",
         'rememberme' => 'Remember me',
-        'or' => 'OR',
-        'google' => [
-            'button' => 'Log in with Google',
-            'text' => 'We never share content on your behalf.',
-        ],
+        'google' => 'Log in with Google',
         'facebook' => 'Log in with Facebook',
-        'alerts' => [
-            'success' => 'Sukces!',
-            'active' => 'Your account is not active! Wait for an email about activation or try again later.',
-            'agreement' => 'The consent has been sent successfully! Wait for an email with a message about activation.',
-        ],
     ],
 
     'register' => [
         'required' => 'Required',
-        'title' => 'Register into ISOW',
+        'title' => 'Register into Volit!',
         'firstname' => 'Firstname',
         'lastname' => 'Lastname',
         'email' => 'Email address',
@@ -45,6 +36,7 @@ return [
         'password' => 'Password',
         'c-password' => 'Confirm password',
         'pesel' => 'PESEL number',
+        'description' => 'Say something about yourself in a few words',
         'tshirt' => 'T-shirt size',
         'street' => 'Street',
         'number' => 'House / flat number',

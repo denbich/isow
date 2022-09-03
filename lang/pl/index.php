@@ -11,33 +11,28 @@ return [
     'footer' => [
         'rememberpwd' => 'Zapomniałeś hasła?',
         'createaccount' => 'Nie masz konta?',
-        'login' => 'Masz już konto? Zaloguj się',
+        'login' => 'Masz już konto?',
         'regulations' => 'Regulamin wolontariatu',
         'codex' => 'Kodeks wolontariuszy',
         'privacypolicy' => 'Polityka prywatności',
     ],
 
     'login' => [
-        'title' => 'Zaloguj się do ISOW!',
+        'title' => 'Zaloguj się do Volit!',
         'type-login' => 'Wpisz email...',
         'type-password' => "Hasło",
         'rememberme' => 'Zapamiętaj mnie',
-        'or' => 'LUB',
-        'google' => [
-            'button' => 'Zaloguj się za pomocą Google',
-            'text' => 'Nigdy nie udostępniamy treści w Twoim imieniu.',
-        ],
+        'google' => 'Zaloguj się za pomocą Google',
         'facebook' => 'Zaloguj się za pomocą Facebooka',
         'alerts' => [
             'success' => 'Sukces!',
-            'active' => 'Twoje konto nie jest aktywne! Oczekuj maila o aktywacji lub spróbuj później.',
-            'agreement' => 'Zgoda została wysłana pomyślnie! Oczekuj maila z wiadomością o aktywacji.',
+
         ],
     ],
 
     'register' => [
         'required' => 'Wymagane',
-        'title' => 'Zarejestruj się do ISOW!',
+        'title' => 'Zarejestruj się do Volit!',
         'firstname' => 'Imię',
         'lastname' => 'Nazwisko',
         'email' => 'Adres email',
@@ -45,7 +40,7 @@ return [
         'password' => 'Hasło',
         'c-password' => 'Potwierdź hasło',
         'pesel' => 'PESEL',
-        'school' => 'Nazwa szkoły',
+        'description' => 'Powiedz coś o sobie w paru słowach',
         'tshirt' => 'Rozmiar koszulki',
         'street' => 'Ulica',
         'number' => 'Numer domu / mieszkania',

@@ -35,8 +35,7 @@ return [
         'title' => 'Panel wolontariusza',
         'id' => 'Twoje ID',
         'points' => 'Punkty',
-        'headerukraine' => 'Akcja #PomagamUkrainie',
-        'textukraine' => 'Kliknij tutaj by zapisać się!',
+        'agreement' => 'Ważność zgody',
         'c-prizes' => 'Liczba nagród',
         'c-forms' => 'Liczba formularzy',
         'posts' => [
@@ -55,8 +54,14 @@ return [
             'button' => 'Zobacz formularze',
             'err' => 'Brak aktywnych formularzy',
         ],
-        'notifications' => [
-            'title' => 'Powiadomienia',
+        'orders' => [
+            'title' => 'Twoje zamówienia',
+            'error' => 'Brak zamówień!',
+            'date' => 'Data zamówienia:',
+            'ordered' => 'Zamówione',
+            'ready' => 'Gotowe do odbioru',
+            'collected' => 'Odebrane',
+            'status' => 'Status:',
         ],
         'help' => [
             'title' => 'Pomoc',

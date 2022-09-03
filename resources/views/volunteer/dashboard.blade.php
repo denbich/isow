@@ -112,7 +112,7 @@
               <div class="row">
                 <div class="col-8">
                   <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">{{ __('Ważność zgody') }}</p>
+                    <p class="text-sm mb-0 text-uppercase font-weight-bold">{{ __('volunteer.dashboard.agreement') }}</p>
                     <h5 class="font-weight-bolder">{{ show_agreement_date() }}</h5>
                   </div>
                 </div>
@@ -260,7 +260,7 @@
         <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
           <div class="card h-100">
             <div class="card-header pb-0 p-3">
-              <h6 class="mb-0">{{ __('Twoje zamówienia') }}</h6>
+              <h6 class="mb-0">{{ __('volunteer.dashboard.orders.title') }}</h6>
             </div>
             <div class="table-responsive">
                 <table class="table align-items-center ">
@@ -274,23 +274,23 @@
                                         </div>
                                         <div class="ms-4">
                                             <h6 class="text-sm mb-0">{{ $order->prize->prize_translate->title }}</h6>
-                                            <p class="text-xs font-weight-bold mb-0">Data zamówienia: <br> {{ $order->created_at }}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ __('volunteer.dashboard.orders.date') }} <br> {{ $order->created_at }}</p>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">{{ __('Status:') }}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ __('volunteer.dashboard.orders.status') }}</p>
                                         <h6 class="text-sm mb-0">
                                             @switch($order->status->last()->condition)
                                             @case(0)
-                                            <span class="badge badge-danger badge-sm">Zamówione</span>
+                                            <span class="badge badge-danger badge-sm">{{ __('volunteer.dashboard.orders.ordered') }}</span>
                                             @break
                                             @case(1)
-                                            <span class="badge badge-info badge-sm">Do odbioru</span>
+                                            <span class="badge badge-info badge-sm">{{ __('volunteer.dashboard.orders.ready') }}</span>
                                             @break
                                             @case(2)
-                                            <span class="badge badge-success badge-sm">Odebrane</span>
+                                            <span class="badge badge-success badge-sm">{{ __('volunteer.dashboard.orders.collected') }}</span>
                                             @break
                                         @endswitch
                                             </h6>
@@ -299,7 +299,7 @@
                             </tr>
                         @empty
                         <tr>
-                            <td><h3 class="text-danger text-center">{{ __('Brak zamówień!') }}</h3></td>
+                            <td><h3 class="text-danger text-center">{{ __('volunteer.dashboard.orders.error') }}</h3></td>
                         </tr>
                         @endforelse
                     </tbody>

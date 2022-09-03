@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
                 if(date('m-d', strtotime($volunteer->birth)) == date('m-d'))
                 {
                     $datam = array('firstname' => $volunteer->user->firstname);
-                    Mail::to('denis@mosir.rybnik.pl')->send(new VolunteerBirthday($datam));
+                    Mail::to($volunteer->user->email)->send(new VolunteerBirthday($datam));
                 }
             }
         })->daily()->at('12:00');

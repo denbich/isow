@@ -247,15 +247,15 @@ bg-gray-200
             <div class="card-body text-dark">
             <div class="row justify-content-center">
                 <div class="col-5">
-                    <img src="{{ url(Auth::user()->photo_src) }}" alt="profile_image" class="w-100 border-radius-lg shadow-sm align-content-center m-auto d-block my-2" style="max-height:300px; max-width:300px">
+                    <img src="{{ url($volunteer->photo_src) }}" alt="profile_image" class="w-100 border-radius-lg shadow-sm align-content-center m-auto d-block my-2" style="max-height:300px; max-width:300px">
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-6">
                     <h3>{{ __('volunteer.id.data') }}:</h3>
-                    <p><b>{{ __('volunteer.id.firstname') }}: </b>{{ Auth::user()->firstname }}</p>
-                    <p><b>{{ __('volunteer.id.lastname') }}: </b>{{ Auth::user()->lastname }}</p>
-                    <p><b>ID: </b>{{ Auth::user()->id }}</p>
+                    <p><b>{{ __('volunteer.id.firstname') }}: </b>{{ $volunteer->firstname }}</p>
+                    <p><b>{{ __('volunteer.id.lastname') }}: </b>{{ $volunteer->lastname }}</p>
+                    <p><b>ID: </b>{{ $volunteer->id }}</p>
                 </div>
                 <div class="col-lg-6">
                     <h4>{{ __('volunteer.id.today') }} <br> ({{ date('d-m-Y'); }}):</h4>

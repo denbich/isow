@@ -12,6 +12,7 @@ return [
     'cancel' => 'Cancel',
     'error' => 'Error',
     'alert' => 'Alert',
+    'gotopanel' => 'Go to panel',
 
     'today' => 'Today',
     'month' => 'Month',

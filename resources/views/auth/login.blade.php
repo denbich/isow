@@ -220,8 +220,7 @@
               </ul>
               <ul class="navbar-nav d-lg-block d-none">
                 <li class="nav-item">
-                  @guest <a href="{{ route('register') }}" class="btn btn-sm mb-0 me-1 btn-primary">{{ __('main.signin') }}</a> @endguest
-                  @auth <a href="{{ route('loginauth') }}" class="btn btn-sm mb-0 me-1 btn-primary">Przejdź do panelu</a> @endauth
+                  <a href="{{ route('register') }}" class="btn btn-sm mb-0 me-1 btn-primary">{{ __('main.signin') }}</a>
                 </li>
               </ul>
             </div>
@@ -268,17 +267,17 @@
                         @enderror
                         @if(session('user_check') == true)
                             <span class="text-danger small" role="alert">
-                                <strong>{{ __('index.login.alerts.active') }}</strong>
+                                <strong>{{ __('alerts.login.active') }}</strong>
                             </span>
                         @endif
                         @if(session('agreement') == true)
                             <span class="text-success small" role="alert">
-                                <strong>{{ __('index.login.alerts.agreement') }}</strong>
+                                <strong>{{ __('alerts.login.agreement') }}</strong>
                             </span>
                         @endif
                         @if(session('block') == true)
                             <span class="text-danger small" role="alert">
-                                <strong>{{ __('Twoje konto zostało zablokowane! Jeśli to błąd skontaktuj się z administratorem.') }}</strong>
+                                <strong>{{ __('') }}</strong>
                             </span>
                         @endif
                     </div>
@@ -293,7 +292,7 @@
                     <div class="btn-wrapper text-center mb-2">
                         <a href="{{ route('google.redirect') }}" class="btn btn-youtube w-100 mt-2 mb-0" ><!-- disabled  -->
                           <span class="btn-inner--icon"><i class="fa-brands fa-google"></i> </span>
-                          <span class="btn-inner--text"> {{ __('index.login.google.button') }}</span>
+                          <span class="btn-inner--text"> {{ __('index.login.google') }}</span>
                         </a>
                         <a href="{{ route('facebook.redirect') }}" class="btn btn-facebook w-100 mt-2 mb-0" ><!-- disabled  -->
                             <span class="btn-inner--icon"><i class="fa-brands fa-facebook"></i> </span>

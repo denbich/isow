@@ -9,7 +9,7 @@ Wszystkiego najlepszego!
 @endsection
 
 @section('content')
-Z okazji Twoich urodzin składamy Ci moc życzeń: uśmiechu, zdrowia, radości, siły oraz chęci niesienia pomocy, zaangażowania, mnóstwa prezentów i gości, przyjaźni wielkich i małych, wielu przygód niebywałych i uśmiechu wesołego i wszystkiego, wszystkiego najlepszego!
+Z okazji Twoich urodzin składamy Ci moc życzeń: uśmiechu, zdrowia, radości, siły oraz chęci niesienia pomocy, zaangażowania, mnóstwa prezentów i gości, przyjaźni wielkich i małych, wielu przygód niebywałych i uśmiechu wesołego!
 @endsection
 
 @section('button-link')
@@ -17,6 +17,6 @@ Z okazji Twoich urodzin składamy Ci moc życzeń: uśmiechu, zdrowia, radości,
 @endsection
 
 @section('button-text')
-Zaloguj się do ISOW
+Zaloguj się do VOLIT
 @endsection
 

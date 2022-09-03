@@ -162,12 +162,13 @@ class HomeController extends Controller
         }
     }
 
-    public function volunteer($volunteer)
+    public function volunteer($ivid)
     {
-        $volunteer = User::where('ivid', $volunteer)->firstOrFail();
+        $volunteer = User::where('ivid', $ivid)->first();
 
         $signed = Form_sign::where('volunteer_id', $volunteer->id)->pluck('form_id');
         $events = Calendar_event::where('start', '>=', date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s')."- 1 day")))->whereIn('form_id', $signed)->get();
+
         return view('home.id')->with(['volunteer' => $volunteer, 'events' => $events]);
     }
 

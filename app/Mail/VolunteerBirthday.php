@@ -20,6 +20,6 @@ class VolunteerBirthday extends Mailable
 
     public function build()
     {
-        return $this->subject('Wsztstkiego najlepszego '.$this->datam['firstname'])->view('mail.volunteerbirthday')->with('data', $this->datam); //$volunteer->user->email
+        return $this->subject('Wszystkiego najlepszego '.$this->datam['firstname']."!")->view('mail.volunteerbirthday')->with('data', $this->datam); //$volunteer->user->email
     }
 }

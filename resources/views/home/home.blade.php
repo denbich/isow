@@ -224,7 +224,7 @@
               <ul class="navbar-nav d-lg-block d-none">
                 <li class="nav-item">
                   @guest <a href="{{ route('register') }}" class="btn btn-sm mb-0 me-1 btn-primary">{{ __('main.signin') }}</a> @endguest
-                  @auth <a href="{{ route('loginauth') }}" class="btn btn-sm mb-0 me-1 btn-primary">Przejdź do panelu</a> @endauth
+                  @auth <a href="{{ route('loginauth') }}" class="btn btn-sm mb-0 me-1 btn-primary">{{ __('main.gotopanel') }}</a> @endauth
                 </li>
               </ul>
             </div>
@@ -244,11 +244,12 @@
             <h1 class="text-white heading mb-3 aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">{{ __('home.header') }}</h1>
             <p class="mb-5 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">{{ __('home.text') }}</p>
             <p data-aos="fade-up" data-aos-delay="300" class="aos-init aos-animate"><a href="{{ route('login') }}" class="btn btn-white mr-2">{{ __('main.login') }}</a> <a href="{{ route('register') }}" class="btn btn-outline-white">{{ __('home.jointous') }}</a></p>
+
             </div>
             <div class="col-lg-6 order-md-1 order-lg-2">
-            <div class="img-wrap aos-init aos-animate" data-aos="fade-left">
-            <img src="{{ url('/assets/img/undraw_team_collaboration_re_ow29.svg') }}" alt="Image" class="img-fluid" data-pagespeed-url-hash="3169690791" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
-            </div>
+                <div class="h-100 w-100 p-auto">
+                    <img src="{{ url('/img/logowmrwhite.svg') }}" alt="" class="h-100 w-100 p-5">
+                </div>
             </div>
             </div>
             </div>
@@ -348,7 +349,7 @@
                     <img src="{{ url('img/volunteers.jpg') }}" alt="" class="w-100 h-auto p-1">
                 </div>
                 <div class="col-sm-6">
-                    <img src="https://scontent.fpoz4-1.fna.fbcdn.net/v/t39.30808-6/264756175_306748604643902_1658744164788884951_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=730e14&_nc_ohc=G0Z_L6ixUosAX-rJclT&tn=stw72IHPR9cPGEcB&_nc_ht=scontent.fpoz4-1.fna&oh=00_AT-b11Zd70XCNxKCmk1xk2_v2HxtH0vrxclCisQVVAyeuA&oe=62FAB511" alt="" class="w-100 h-auto p-1">
+                    <img src="{{ url('img/volunteers2.jpg') }}" alt="" class="w-100 h-auto p-1">
                 </div>
                 <div class="col-sm-4 d-none">
                     <img src="{{ url('img/volunteers.jpg') }}" alt="" class="w-100 p-1">
