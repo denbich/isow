@@ -5,165 +5,295 @@
 @endsection
 
 @section('body')
-class="bg-default"
+bg-gray-200
 @endsection
 
 @section('content')
 
-<!-- Navbar -->
-
-<nav id="navbar-main" class="navbar navbar-horizontal navbar-transparent navbar-main navbar-expand-lg navbar-light">
-    <div class="container text-primary">
-        <div class="navbar-brand">
-            <a class="" href="{{ route('home') }}">
-                <img class="h-25" style="max-height: 110px" src="{{ url('/img/logowmrwhite.svg') }}">
-              </a>
-              <a class="" href="{{ route('help_ukraine') }}" rel="noopener noreferrer">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/4/49/Flag_of_Ukraine.svg" alt="">
-              </a>
-        </div>
-
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="fas fa-bars"></i>
-      </button>
-      <div class="navbar-collapse navbar-custom-collapse collapse" id="navbar-collapse">
-        <div class="navbar-collapse-header">
-          <div class="row">
-            <div class="col-8 collapse-brand text-center mx-auto">
-              <a href="{{ route('home') }}">
-                <img class="h-100" style="max-height: 110px; min-height:100px;" src="{{ url('/img/logowmr1.svg') }}" alt="wmr logo">
-
-              </a>
-              <a href="{{ route('help_ukraine') }}" class="w-100 text-center mx-auto" rel="noopener noreferrer">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/4/49/Flag_of_Ukraine.svg" class="text-center mx-auto my-2" alt="Ukraine flag">
-            </a>
-            </div>
-            <div class="col-4 collapse-close">
-              <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
-                <span></span>
-                <span></span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <ul class="navbar-nav mr-auto">
+<nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent mt-4">
+    <div class="container-fluid">
+        <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-white" href="{{ route('home') }}">
+          Wolontariat MOSiR Rybnik
+        </a>
+        <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon mt-2">
+            <span class="navbar-toggler-bar bar1"></span>
+            <span class="navbar-toggler-bar bar2"></span>
+            <span class="navbar-toggler-bar bar3"></span>
+          </span>
+        </button>
+        <div class="collapse navbar-collapse" id="navigation">
+          <ul class="navbar-nav mx-auto">
             <li class="nav-item">
-              <a href="{{ route('home') }}" class="nav-link text-center">
-                <span class="nav-link-inner--text">{{ __('home.title') }}</span>
+              <a class="nav-link d-flex align-items-center me-2" aria-current="page" href="{{ route('home') }}">
+                <i class="fa-solid fa-house me-1"></i>
+                {{ __('home.title') }}
               </a>
             </li>
-            <li class="nav-item">
-                <li class="nav-item text-center">
-                    <div class="dropdown">
-                      <a class="nav-link dropdown-toggle text-center" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{__('home.socialmedia.title')}}</a>
-
-                      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item d-none" href=""><i class="fas fa-info-circle"></i> O nas</a>
-                        <a class="dropdown-item" href="https://facebook.com/wolontariat.rybnik" target="_blank"><i class="fab fa-facebook-square"></i> {{ __('home.socialmedia.facebook') }}</a>
-                        <a class="dropdown-item" href="https://instagram.com/wolontariat.rybnik" target="_blank"><i class="fab fa-instagram"></i> {{ __('home.socialmedia.instagram') }}</a>
-                      </div>
-                    </div>
-                  </li>
+            @guest
+            <li class="nav-item font-weight-bold">
+              <a class="nav-link me-2 font-weight-bold" href="{{ route('login') }}">
+                <i class="fas fa-key me-1"></i>
+                {{ __('main.login') }}
+              </a>
             </li>
-            <li class="nav-item">
-                <a href="{{ route('login') }}" class="nav-link text-center">
-                    <span class="nav-link-inner--text">{{ __('main.login') }}</span>
+            @endguest
+            <li class="nav-item dropdown dropdown-hover mx-2">
+                <a role="button" class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" id="dropdownMenuBlocks" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{__('home.socialmedia.title')}}
+                    <img src="/assets/img/down-arrow-white.svg " alt="down-arrow" class="arrow ms-1 d-lg-block d-none">
+                    <img src="/assets/img/down-arrow-white.svg" alt="down-arrow" class="arrow ms-1 d-lg-none d-block">
                 </a>
-            </li>
-
-          </ul>
-        <hr class="d-lg-none" />
-        <ul class="navbar-nav align-items-lg-center ml-lg-auto">
-          @include('include.lang')
-
-          <li class="nav-item d-lg-block ml-lg-4 text-center">
-            <a href="{{ route('register') }}" class="btn btn-neutral btn-icon text-center">
-              <span class="btn-inner--icon">
-                <i class="fas fa-handshake mr-2"></i>
-              </span>
-              <span class="nav-link-inner--text">{{ __('main.signin') }}</span>
+                <div class="dropdown-menu dropdown-menu-animation dropdown-md dropdown-md-responsive p-3 border-radius-lg mt-0 mt-lg-3 shadow-none shadow-lg-lg" aria-labelledby="dropdownMenuBlocks">
+                    <div class="d-none d-lg-block">
+                        <ul class="list-group">
+                            <li class="nav-item dropdown dropdown-hover dropdown-subitem list-group-item border-0 p-0">
+                                <a class="dropdown-item py-2 ps-3 border-radius-md" href="https://facebook.com/wolontariat.rybnik">
+                                    <div class="d-flex">
+                                        <div class="icon h-10 me-3 d-flex mt-1">
+                                             <i class="fa-brands fa-facebook text-primary"></i>
+                                        </div>
+                                    <div class="w-100 d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <p class="dropdown-header text-dark p-0">{{ __('home.socialmedia.facebook') }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown dropdown-hover dropdown-subitem list-group-item border-0 p-0">
+                            <a class="dropdown-item py-2 ps-3 border-radius-md" href="https://instagram.com/wolontariat.rybnik">
+                                <div class="d-flex">
+                                    <div class="icon h-10 me-3 d-flex mt-1">
+                                        <i class="fa-brands fa-instagram text-primary"></i>
+                                    </div>
+                                <div class="w-100 d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <p class="dropdown-header text-dark p-0">{{ __('home.socialmedia.instagram') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                </div>
+                <div class="row d-lg-none">
+                    <div class="col-md-12">
+                        <a class="py-2 ps-3 border-radius-md" href="https://facebook.com/wolontariat.rybnik">
+                            <div class="d-flex">
+                                <div class="icon h-10 me-3 d-flex mt-1">
+                                    <i class="fa-brands fa-facebook text-primary"></i>
+                                </div>
+                                <div class="w-100 d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <p class="dropdown-header text-dark p-0">{{ __('home.socialmedia.facebook') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <a class="py-2 ps-3 border-radius-md" href="https://instagram.com/wolontariat.rybnik">
+                            <div class="d-flex">
+                                <div class="icon h-10 me-3 d-flex mt-1">
+                                    <i class="fa-brands fa-instagram text-primary"></i>
+                                </div>
+                                <div class="w-100 d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <p class="dropdown-header text-dark p-0">{{ __('home.socialmedia.instagram') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link me-2 d-none" href="{{ route('home') }}">
+              <i class="fa-solid fa-envelope me-1"></i>
+              {{ __('home.contact') }}
             </a>
           </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Main content -->
-  <div class="main-content">
-    <div class="header bg-gradient-primary py-8 py-lg-8 pt-lg-9">
-        <div class="container">
-          <div class="header-body text-center mb-6">
-            <div class="row justify-content-center">
-              <div class="col-xl-8 col-lg-8 col-md-8 px-5">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="separator separator-bottom separator-skew zindex-100">
-          <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
-            <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
-          </svg>
-        </div>
-      </div>
-    <!-- Page content -->
-    <div class="container mt--8 pb-5">
-      <div class=""> <!-- row justify-content-center col-lg-5 col-md-7 -->
-          <div class="card bg-secondary border-0 mb-0">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="zdjecie-login w-100 h-100" style="margin-left:20px;"></div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="card-header bg-transparent text-center">
-                        <a href="{{ route('login') }}"><img src="{{ url('/img/mosir-logo1.svg') }}" class="text-center"></a>
-                        <div class="mt-2 h2">{{ __('index.password.email.title') }}</div>
-                        <div> {{ __('index.password.email.text') }}</div>
-                      </div>
-                      <div class="card-body pt-lg-3 pb-lg-4 px-lg-5">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                             </div>
-                        @endif
-                        <form class="user mt-3" method="POST" action="{{ route('password.email') }}">
-                            @csrf
-                            <label for="email">{{ __('index.password.email.email') }}</label>
-                            <div class="form-group">
-                                <div class="input-group input-group-merge input-group-alternative">
-                                <input id="email" type="email" class="form-control form-control-user @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+        <li class="nav-item dropdown dropdown-hover mx-2">
+            <a role="button" class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" id="dropdownMenuLanguage" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-language text-lg"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-animation dropdown-md dropdown-md-responsive p-3 border-radius-lg mt-0 mt-lg-3 shadow-none shadow-lg-lg" aria-labelledby="dropdownMenuLanguage">
+                <div class="d-none d-lg-block">
+                    <h6 class="text-center">{{ __('main.lang') }}</h6>
+                    <ul class="list-group">
+                        <li class="nav-item dropdown dropdown-hover dropdown-subitem list-group-item border-0 p-0 ">
+                            <a class="dropdown-item py-2 ps-3 border-radius-md @if (session('locale') == 'pl') bg-gray-200 @endif" href="{{ route('language', 'pl') }}">
+                                <div class="d-flex">
+                                    <div class="icon h-15 me-3 d-flex mt-1">
+                                        <img src="https://cdn.jsdelivr.net/npm/round-flag-icons/flags/pl.svg" alt="">
+                                    </div>
+                                <div class="w-100 d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <h6 class="dropdown-header text-dark d-flex align-items-center p-0"><span class="font-weight-bolder">{{ __('main.langlist.current.polish') }}</span>&nbsp;({{ __('main.langlist.foreign.polish') }})</h6>
+                                    </div>
                                 </div>
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-
                             </div>
-                            <button type="submit" class="btn btn-info text-dark btn-user btn-block">{{ __('index.password.email.button') }}</button>
-                            <a href="{{ route('login') }}" class="btn btn-outline-info text-dark btn-user btn-block">{{ __('index.password.email.login') }}</a>
-                        </form>
-                      </div>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown dropdown-hover dropdown-subitem list-group-item border-0 p-0">
+                        <a class="dropdown-item py-2 ps-3 border-radius-md @if (session('locale') == 'en') bg-gray-200 @endif" href="{{ route('language', 'en') }}">
+                            <div class="d-flex">
+                                <div class="icon h-15 me-3 d-flex mt-1">
+                                    <img src="https://cdn.jsdelivr.net/npm/round-flag-icons/flags/gb.svg" alt="">
+                                </div>
+                            <div class="w-100 d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h6 class="dropdown-header text-dark d-flex align-items-center p-0"><span class="font-weight-bolder">{{ __('main.langlist.current.english') }}</span>&nbsp;({{ __('main.langlist.foreign.english') }})</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item dropdown dropdown-hover dropdown-subitem list-group-item border-0 p-0">
+                    <a class="dropdown-item py-2 ps-3 border-radius-md @if (session('locale') == 'uk') bg-gray-200 @endif" href="{{ route('language', 'uk') }}">
+                        <div class="d-flex">
+                            <div class="icon h-15 me-3 d-flex mt-1">
+                                <img src="https://cdn.jsdelivr.net/npm/round-flag-icons/flags/ua.svg" alt="">
+                            </div>
+                        <div class="w-100 d-flex align-items-center justify-content-between">
+                            <div>
+                                <h6 class="dropdown-header text-dark d-flex align-items-center p-0"><span class="font-weight-bolder">{{ __('main.langlist.current.ukrainian') }}</span>&nbsp;({{ __('main.langlist.foreign.ukrainian') }})</h6>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <div class="text-sm-center w-100 d-none"><a href="" class="text-primary">{{ __('main.morelang') }}</a></div>
+
+    </div>
+            <div class="row d-lg-none">
+                <div class="col-md-12">
+                    <a class="py-2 ps-3 border-radius-md" href="{{ route('language', 'pl') }}">
+                        <div class="d-flex @if (session('locale') == 'pl') bg-gray-200 @endif">
+                            <div class="icon h-10 me-3 d-flex mt-1">
+                                <img src="https://cdn.jsdelivr.net/npm/round-flag-icons/flags/pl.svg" alt="">
+                            </div>
+                            <div class="w-100 d-flex align-items-center justify-content-between">
+                                <div>
+                                    <p class="dropdown-header text-dark p-0"><span class="font-weight-bolder">{{ __('main.langlist.current.polish') }}</span>&nbsp;({{ __('main.langlist.foreign.polish') }})</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="py-2 ps-3 border-radius-md" href="{{ route('language', 'en') }}">
+                        <div class="d-flex @if (session('locale') == 'en') bg-gray-200 @endif">
+                            <div class="icon h-10 me-3 d-flex mt-1">
+                                <img src="https://cdn.jsdelivr.net/npm/round-flag-icons/flags/gb.svg" alt="">
+                            </div>
+                            <div class="w-100 d-flex align-items-center justify-content-between">
+                                <div>
+                                    <p class="dropdown-header text-dark p-0"><span class="font-weight-bolder">{{ __('main.langlist.current.english') }}</span>&nbsp;({{ __('main.langlist.foreign.english') }})</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="py-2 ps-3 border-radius-md" href="{{ route('language', 'uk') }}">
+                        <div class="d-flex @if (session('locale') == 'uk') bg-gray-200 @endif">
+                            <div class="icon h-10 me-3 d-flex mt-1">
+                                <img src="https://cdn.jsdelivr.net/npm/round-flag-icons/flags/ua.svg" alt="">
+                            </div>
+                            <div class="w-100 d-flex align-items-center justify-content-between">
+                                <div>
+                                    <p class="dropdown-header text-dark p-0"><span class="font-weight-bolder">{{ __('main.langlist.current.ukrainian') }}</span>&nbsp;({{ __('main.langlist.foreign.ukrainian') }})</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
+                <div class="text-sm-center w-100 d-none"><a href="" class="text-primary">{{ __('main.morelang') }}</a></div>
             </div>
+        </div>
+    </li>
+          </ul>
+          <ul class="navbar-nav d-lg-block d-none">
+            <li class="nav-item">
+              <a href="{{ route('register') }}" class="btn btn-sm mb-0 me-1 btn-primary">{{ __('main.signin') }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+</nav>
 
-
+<main class="main-content  mt-0">
+    <div class="page-header align-items-start min-vh-60 pt-5 pb-11 m-3 border-radius-lg" style="background-image: url('https://mosir.rybnik.pl/fileadmin/user_files/o-nas/wolontariat/72841164_2518600048193514_3649408641687093248_n.jpg'); background-position: center;">
+      <span class="mask bg-gradient-dark opacity-6"></span>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-5 text-center mx-auto">
+            <h1 class="text-white mb-2 mt-5">{{ __('index.password.email.title') }}</h1>
+            <h5 class="text-lead text-white">{{ __('index.password.email.text') }}</h5>
           </div>
-          <div class="row mt-3">
-            <div class="col-6">
-
-            </div>
-            <div class="col-6 text-right">
-
-            </div>
-          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <!-- Footer -->
-  @include('auth.footer')
+    <div class="container">
+      <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
+        <div class="col-xl-6 col-lg-7 col-md-8 mx-auto">
+          <div class="card z-index-0">
+            <div class="card-body px-lg-5 py-lg-5">
+                @if (session('status'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
+                @endif
+              <form method="post" action="{{ route('password.email') }}" role="form" id="pwdreset_form">
+                @csrf
+                <div class="form-group">
+                    <label for="email" class="text-muted text-lg my-2">{{ __('index.password.email.email') }}</label>
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="np. email@example.com" autofocus>
+                    @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+
+                </div>
+
+                <div class="text-center">
+                  <button type="submit" class="btn bg-gradient-dark w-100 my-2" id="pwdreset_button">{{ __('index.password.email.button') }}</button>
+                  <a href="{{ route('login') }}" class="btn btn-outline-dark w-100 my-2">{{ __('Wróć do logowania') }}</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer py-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mb-4 mx-auto text-center">
+          <a href="{{ route('regulations') }}" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">{{ __('index.footer.regulations') }} </a>
+          <a href="{{ route('codex') }}" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">{{ __('index.footer.codex') }}</a>
+          <a href="{{ route('privacy_policy') }}" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">{{ __('index.footer.privacypolicy') }}</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-8 mx-auto text-center mt-1">
+          <p class="mb-0 text-secondary">
+            Copyright © 2019 -<script> document.write(new Date().getFullYear()) </script> <a href="https://linktr.ee/denis.bichler" class="font-weight-bold ml-1" target="_blank">Denis Bichler for MOSiR Rybnik</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
 
 @endsection
 
+@push('scripts')
 
-
+<script>
+    $('#pwdreset_form').submit(function(){
+        $('#pwdreset_button').prop('disabled', true);
+        $('#pwdreset_button').prepend('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ');
+    });
+</script>
+@endpush

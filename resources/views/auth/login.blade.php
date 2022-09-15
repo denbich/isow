@@ -254,7 +254,10 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                      <input type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" autocomplete="current-password" placeholder="{{ __('index.login.type-password') }}" aria-label="Password" required >
+                      <input type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" autocomplete="current-password" placeholder="{{ __('index.login.type-password') }}" aria-label="Password" required>
+                      <div class="text-sm mt-2">
+                        <a href="{{ route('password.request') }}" class="mx-2">{{ __('index.footer.rememberpwd') }}</a>
+                      </div>
                       @error('password')
                         <span class="text-danger small" role="alert">
                             <strong>{{ $message }}</strong>

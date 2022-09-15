@@ -13,7 +13,7 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id');
             $table->string('locale')->index();
             $table->string('name');
-            $table->string('description')->nullable();;
+            $table->string('description')->nullable();
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('form_categories')->onDelete('cascade');

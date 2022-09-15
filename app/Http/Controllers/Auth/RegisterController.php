@@ -75,7 +75,7 @@ class RegisterController extends Controller
             'tshirt_size' => ['required', 'string', 'max:255'],
             'birth' => ['required', 'date'],
             'gender' => ['required', 'string', 'size:1'],
-            'agreement.*' => ['required', 'file', 'mimes:pdf,jepg,png,jpg', 'max:7168'],
+            'agreement.*' => ['required', 'file', 'mimes:pdf', 'max:7168'], //'mimes:pdf,jepg,png,jpg'
             'profile' => ['required'],
             'terms' => ['required'],
             'g-recaptcha-response' => ['required', 'captcha'],

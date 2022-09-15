@@ -43,7 +43,7 @@ return [
         'city' => 'City',
         'birth' => 'Birth date',
         'agreement' => [
-            'text1' => 'Consent to participate in volunteering (PDF or Image file(s))',
+            'text1' => 'Consent to participate in volunteering (PDF file(s))', // or Image
             'text2' => 'You can find them here',
             'adult' => 'adult',
             'minor' => 'minor',

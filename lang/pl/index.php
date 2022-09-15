@@ -47,7 +47,7 @@ return [
         'city' => 'Miasto',
         'birth' => 'Data urodzenia',
         'agreement' => [
-            'text1' => 'Zgoda na uczestnictwo w wolontariacie (Plik PDF lub zdjęcie/a)',
+            'text1' => 'Zgoda na uczestnictwo w wolontariacie (Plik PDF)', // lub zdjęcie/a
             'text2' => 'Znajdziesz je tutaj',
             'adult' => 'pełnoletni',
             'minor' => 'niepełnoletni',

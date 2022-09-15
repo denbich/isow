@@ -418,7 +418,7 @@ bg-gray-200
                         <a class="font-weight-700 text-primary" href="{{ url('/files/zgoda_wolontariat_pelnoletni.pdf') }}" target="_blank">{{ __('index.register.agreement.adult') }}</a> |
                         <a class="font-weight-700 text-primary" href="{{ url('/files/zgoda_wolontariat_niepelnoletni.pdf') }}" target="_blank">{{ __('index.register.agreement.minor') }}</a></span><br>
                     <a href="#AgreementexampleModal" class="text-sm text-primary" data-bs-toggle="modal" data-bs-target="#AgreementexampleModal">Krótki poradnik jak poprawnie dodać zgodę</a>
-                    <input type="file" class="form-control mt-2" accept=".pdf,.png,.jpg,.jepg" name="agreement[]" multiple required>
+                    <input type="file" class="form-control mt-2" accept=".pdf" name="agreement[]" multiple required> <!-- ,.png,.jpg,.jepg -->
                     <small class="text-xs">{{ __('index.register.agreement.size') }}: 7MB</small>
                     @error('agreement')
                         <span class="text-danger text-sm" role="alert">
